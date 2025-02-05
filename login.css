@@ -1,0 +1,203 @@
+/* Import Google font - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+body{
+
+    background-color: palevioletred;
+
+}
+
+.form-container{
+    position: absolute;
+    max-width: 400px;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) ;
+    z-index: 101;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.1);
+
+}
+
+
+.form-container h2{
+    font-size: 22px;
+    color: palevioletred;
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+
+.input-box{
+    position: relative;
+    margin-top: 30px;
+    width: 100%;
+    height: 40px;
+}
+
+.input-box input{
+    height: 100%;
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 0 30px;
+    color: palevioletred;
+    transition: all 0.2s ease;
+    border-bottom: 1.5px solid #ccc;
+    
+}
+
+.input-box input:focus{
+    border-color:  mediumorchid;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input-box i{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+.input-box i.username,
+.input-box i.password {
+    left: 0;
+    color: palevioletred;
+}
+
+.input-box input:focus ~  i.username,
+.input-box input:focus ~  i.password{
+    color: mediumorchid;
+
+}
+
+.input-box i.pw-hide{
+    right: 0;
+    font-size: 18px;
+    color: palevioletred;
+    cursor: pointer;
+}
+
+.option-field{
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.form-container a{
+    color: mediumorchid;
+    font-size: 12px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.form-container a:hover {
+    text-decoration: underline;
+    color: palevioletred;
+
+}
+
+.checkbox{
+    display: flex;
+    column-gap: 8px;
+    white-space: nowrap;
+}
+
+.checkbox input {
+    accent-color: mediumorchid;
+}
+
+.checkbox label {
+    font-size: 12px;
+    cursor: pointer;
+    user-select: none;
+    color: mediumorchid;  
+}
+
+.form-container .button {
+    background: linear-gradient(135deg, palevioletred, mediumorchid);
+    color: #fff;
+    font-weight: bold;
+    margin-top: 30px;
+    width: 100%;
+    padding: 12px 0;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-container .button:hover {
+    background: linear-gradient(135deg, mediumorchid, palevioletred);
+    box-shadow: 0 4px 6px rgba(216, 122, 147);
+}
+
+.notification-container {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 400px;
+    z-index: 1000;
+    display: none; 
+}
+
+.alert {
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+}
+
+.alert-success {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #badbcc;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        padding: 20px;
+    }
+}
+
+
+

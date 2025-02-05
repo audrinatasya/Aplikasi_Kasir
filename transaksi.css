@@ -1,0 +1,363 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@270;400;500;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f7fa; 
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 55%; 
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 800;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+h2{
+    font-size: 28px;
+    color:  #e74fa5;
+}
+
+h3 {
+    font-size: 24px;
+    color: #ff77c4; 
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-weight: 700;
+    display: block;
+    margin-bottom: 6px;
+   color: #e65c97;
+}
+
+.form-group input, .form-group textarea {
+    width: 95%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: 1px solid #f0d7e5;
+    background-color: #fef2f9;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-color: #ff77c4;
+    outline: none;
+}
+
+/* Tombol utama */
+button {
+    display: inline-block;
+    padding: 12px 22px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #ff77c4; /* Warna pink muda */
+    color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    text-align: center;
+    margin: 10px 0;
+}
+
+button:hover {
+    background-color: #e65c97;  /* Warna pink lebih gelap saat hover */
+    transform: scale(1.05);
+}
+
+
+/* Tombol kembali */
+.back-button {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.back-button a {
+    text-decoration: none;
+    display: inline-block;
+    background-color: #f8cce7;
+    color: #ff77c4;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 30px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.back-button a:hover {
+    background-color: #f1a1c3;
+    transform: scale(1.05);
+}
+
+/* Desain kartu produk */
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.product-card {
+    flex: 1 1 calc(40% - 18px);
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    padding: 5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+
+.product-card h3 {
+    font-size: 20px;
+    color: #ff77c4;
+    text-align: center;
+    font-weight: 700;
+}
+
+.product-card p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 15px;
+    margin-inline-start: 17px;
+}
+
+/* Gaya khusus untuk tombol tambah (+) dan kurang (-) */
+.product-card a[href*="tambah"],
+.product-card a[href*="kurang"] {
+    display: inline-block;
+    padding: 5px;
+    margin: 2px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    border: none;
+    border-radius: 30%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    margin-bottom: 7px;
+}
+
+/* Gaya khusus untuk tombol tambah (+) */
+.product-card a[href*="tambah"] {
+    background-color: #28A745; /* Warna hijau */
+}
+
+/* Gaya khusus untuk tombol kurang (-) */
+.product-card a[href*="kurang"] {
+    background-color: #DC3545; /* Warna merah */
+    margin-left: 60%;
+  
+}
+
+/* Efek hover untuk tombol tambah dan kurang */
+.product-card a[href*="tambah"]:hover,
+.product-card a[href*="kurang"]:hover {
+    opacity: 0.9;
+    transform: scale(1.1); /* Sedikit membesar saat dihover */
+}
+
+/* Efek aktif (saat diklik) */
+.product-card a[href*="tambah"]:active,
+.product-card a[href*="kurang"]:active {
+    transform: scale(0.95); /* Sedikit mengecil saat diklik */
+}
+
+.product-card .delete-button {
+    position: absolute;
+    bottom: 10px;
+    right: 20px; /* Posisi di kanan bawah */
+    padding: 5px 10px;
+    background-color: #da2c88;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.product-card .delete-button:hover {
+    background-color: #c42d78;
+}
+
+
+
+/* Grand Total */
+.grand-total {
+    margin-top: 35px;
+    font-size: 20px;
+    text-align: center;
+    color:  #da2c88;
+    font-weight: 700;
+    padding: 3px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Kartu pembayaran */
+.payment-card {
+    background-color: #fef2f9;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Item pembayaran */
+.payment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.payment-item label {
+    font-weight: 700;
+    color: #e65c97;;
+    font-size: 16px;
+}
+
+.payment-item input {
+    width: 60%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: 1px solid #f0d7e5;
+    background-color: #fef2f9;
+    transition: border-color 0.3s;
+}
+
+.payment-item input:focus {
+    border-color: #ff77c4;
+    outline: none;
+}
+
+/* Tombol bayar */
+button {
+    padding: 12px 22px;
+    background-color: #e74fa5;
+    color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    align-self: center;
+}
+
+button:hover {
+    background-color: rgb(197, 120, 197);
+    transform: scale(1.05);
+}
+
+.transaction-success {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    font-family: Arial, sans-serif;
+    color: #333;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.transaction-success h3 {
+    text-align: center;
+    color: #ff1493;
+    margin-bottom: 15px;
+}
+
+.transaction-success h4 {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #555;
+}
+
+.transaction-success ul.item-list {
+    margin: 10px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.transaction-success ul.item-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    font-size: 14px;
+}
+
+.transaction-success ul.item-list li span {
+    font-size: 14px;
+    color: #555;
+}
+
+.transaction-success .info p {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.transaction-success .info p strong {
+    color: #555;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 10px 0;
+}
+
+.transaction-success .action-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.transaction-success .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    background-color: #ff1493;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.transaction-success .btn:hover {
+    background-color:rgb(237, 17, 134);
+}
+
