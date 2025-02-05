@@ -28,7 +28,7 @@ $searchKeyword = $_GET['search'] ?? '';
 <header>
     <h2>
         <label>
-            <span class="las la-bars"></span>
+            <span class="uil uil-slack"></span>
         </label>
         Transaksi
     </h2>

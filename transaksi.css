@@ -265,19 +265,20 @@ button:hover {
 /* Tombol bayar */
 button {
     padding: 12px 22px;
-    background-color: #e74fa5;
+    background-color: rgb(197, 120, 197);
     color: #ffffff;
     border: none;
-    border-radius: 30px;
+    border-radius: 10px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
     align-self: center;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 button:hover {
-    background-color: rgb(197, 120, 197);
+    background-color: cornflowerblue;
     transform: scale(1.05);
 }
 
@@ -295,7 +296,7 @@ button:hover {
 
 .transaction-success h3 {
     text-align: center;
-    color: #ff1493;
+    color: #f32291;
     margin-bottom: 15px;
 }
 
@@ -349,7 +350,7 @@ button:hover {
     display: inline-block;
     padding: 10px 20px;
     color: white;
-    background-color: #ff1493;
+    background-color: rgb(197, 120, 197);
     border: none;
     border-radius: 10px;
     text-decoration: none;
@@ -358,6 +359,6 @@ button:hover {
 }
 
 .transaction-success .btn:hover {
-    background-color:rgb(237, 17, 134);
+    background-color:rgb(197, 120, 197);
 }
 

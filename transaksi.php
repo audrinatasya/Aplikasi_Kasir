@@ -3,9 +3,11 @@ session_start();
 include 'config.php'; 
 
 if (empty($_SESSION['cart'])) {
-    echo "Keranjang Anda kosong. <a href='cart.php'>Kembali ke Transaksi</a>";
-    exit;
+   
+    header('Location: cart.php');
+    exit; 
 }
+
 
 if (isset($_GET['action']) && isset($_GET['id_produk'])) {
     $id_produk = (int) $_GET['id_produk'];
@@ -63,7 +65,7 @@ $tanggal_penjualan = date('Y-m-d H:i:s');
 $kembalian = 0;
 $error_message = '';
 
-// Variabel untuk menyimpan nilai input form
+
 $nama_pelanggan = '';
 $alamat = '';
 $nomor_telepon = '';
@@ -200,7 +202,7 @@ $daftar_barang = isset($cart) ? $cart : [];
         <h4>Detail Barang:</h4>
         <ul class="item-list">
             <?php foreach ($daftar_barang as $barang): 
-                // Hitung subtotal untuk setiap barang
+
                 $subtotal = $barang['jumlah'] * $barang['harga'];
             ?>
                 <li>
