@@ -78,15 +78,11 @@ function getRekap($periode, $tanggal = null, $bulan = null, $tahun = null, $sear
 
     $totalPenjualanQuery = "SELECT SUM(p.total_harga) AS total_penjualan
                             FROM penjual p
-<<<<<<< HEAD
                             JOIN detail_penjualan dp ON p.id_penjualan = dp.id_penjualan
                             JOIN produk pr ON dp.id_produk = pr.id_produk
                             JOIN pelanggan pl ON dp.id_penjualan = pl.id_pelanggan
                             WHERE $where";
 
-=======
-                            WHERE $where";
->>>>>>> 4c57d735eb0f60fb605e50dd8f07a6a1da009448
     $totalPenjualanResult = mysqli_query($conn, $totalPenjualanQuery);
     $totalPenjualanData = mysqli_fetch_assoc($totalPenjualanResult);
     
