@@ -238,42 +238,7 @@ i.uil-search{
     font-weight:bold;
 }
 
-@media print {
-    body * {
-        visibility: hidden;
-    }
-    table, table * {
-        visibility: visible;
-    }
 
-    .pagination, .no-print {
-        display: none !important;
-    }
-
-    table {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-    }
-    .table {
-    width: 100%;
-    border-collapse: collapse;
-    }
-   
-    .table tr {
-    color: black;
-    }
-
-    .judul-laporan {
-    text-align: center;
-    font-size: 100%;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-
-}
 
 @media (max-width: 900px) {
     .filter-form {

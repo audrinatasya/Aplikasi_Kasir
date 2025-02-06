@@ -13,7 +13,76 @@ session_regenerate_Id(true); ?>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
     <link rel="stylesheet" href="tabel.css">
     
-  
+
+<style>
+   @media print {
+    body * {
+        visibility: hidden;
+        margin: 0;
+        padding: 0;
+    }
+
+    .print-section,
+    .print-section *,
+    .table,
+    .table *,
+    .ttd,
+    .ttd * {
+        visibility: visible;
+    }
+
+
+    .print-section {
+           position: absolute;
+           top: 0;
+           left: 0;
+           width: 100%;
+           text-align: center;
+         
+       }
+
+       .table {
+    
+            margin: 0; /* Hapus margin */
+            border-collapse: collapse; /* Hapus jarak antar border */
+            text-align: center;
+     
+       }
+
+       .table th,
+       .table td {
+           border: 1px solid black;
+           padding: 8px;
+       }
+
+
+    .judul-laporan,
+       h3,
+       p {
+           margin-bottom: 20px; /* Beri jarak lebih rapi */
+       }
+
+    .ttd {
+           text-align: right;
+           margin-top: 50px;
+           margin-right: 50px;
+       }
+
+       .ttd p {
+           margin: 0;
+           padding: 0;
+       }
+
+
+    .no-print {
+        display: none !important;
+    }
+}
+</style>
+
+
+
+
 
 </head>
 <body>
@@ -43,12 +112,12 @@ function getRekap($periode, $tanggal = null, $bulan = null, $tahun = null, $sear
     }
 
     if (!empty($searchKeyword)) {
-        $where .= " AND (pr.nama_produk LIKE '%$searchKeyword%' OR p.id_penjualan LIKE '%$searchKeyword%')";
+        $where .= " AND (pr.nama_produk LIKE '%$searchKeyword%' OR p.Id_penjualan LIKE '%$searchKeyword%')";
     }
 
         $query = "SELECT 
                     (@row_number := @row_number + 1) AS nomor_transaksi,
-                    p.id_penjualan, 
+                    p.Id_penjualan, 
                     p.tanggal_penjualan, 
                     pr.nama_produk, 
                     dp.jumlah_produk, 
@@ -57,11 +126,11 @@ function getRekap($periode, $tanggal = null, $bulan = null, $tahun = null, $sear
                     p.total_harga,
                     pl.nama_pelanggan
                     FROM (SELECT @row_number := 0) AS init, penjual p
-                    JOIN detail_penjualan dp ON p.id_penjualan = dp.id_penjualan
-                    JOIN pelanggan pl ON dp.id_penjualan = pl.id_pelanggan
-                    JOIN produk pr ON dp.id_produk = pr.id_produk
+                    JOIN detail_penjualan dp ON p.Id_penjualan = dp.Id_penjualan
+                    JOIN pelanggan pl ON dp.Id_penjualan = pl.Id_pelanggan
+                    JOIN produk pr ON dp.Id_produk = pr.Id_produk
                     WHERE $where
-                    ORDER BY p.tanggal_penjualan ASC, p.id_penjualan ASC
+                    ORDER BY p.tanggal_penjualan ASC, p.Id_penjualan ASC
                     LIMIT $limit OFFSET $offset";
 
     $result = mysqli_query($conn, $query);
@@ -69,18 +138,18 @@ function getRekap($periode, $tanggal = null, $bulan = null, $tahun = null, $sear
 
     $totalQuery = "SELECT COUNT(*) AS total_rows
                    FROM penjual p
-                   JOIN detail_penjualan dp ON p.id_penjualan = dp.id_penjualan
-                   JOIN produk pr ON dp.id_produk = pr.id_produk
-                   JOIN pelanggan pl ON dp.id_penjualan = pl.id_pelanggan
+                   JOIN detail_penjualan dp ON p.Id_penjualan = dp.Id_penjualan
+                   JOIN produk pr ON dp.Id_produk = pr.Id_produk
+                   JOIN pelanggan pl ON dp.Id_penjualan = pl.Id_pelanggan
                    WHERE $where";
     $totalResult = mysqli_query($conn, $totalQuery);
     $totalData = mysqli_fetch_assoc($totalResult);
 
     $totalPenjualanQuery = "SELECT SUM(p.total_harga) AS total_penjualan
                             FROM penjual p
-                            JOIN detail_penjualan dp ON p.id_penjualan = dp.id_penjualan
-                            JOIN produk pr ON dp.id_produk = pr.id_produk
-                            JOIN pelanggan pl ON dp.id_penjualan = pl.id_pelanggan
+                            JOIN detail_penjualan dp ON p.Id_penjualan = dp.Id_penjualan
+                            JOIN produk pr ON dp.Id_produk = pr.Id_produk
+                            JOIN pelanggan pl ON dp.Id_penjualan = pl.Id_pelanggan
                             WHERE $where";
 
     $totalPenjualanResult = mysqli_query($conn, $totalPenjualanQuery);
@@ -194,6 +263,23 @@ $totalPages = ceil($totalRows / $limit);
 
             </div>
 
+          
+            <div class="print-section" style="text-align: center; ">
+                <h2 class="judul-laporan">Laporan Penjualan</h2>
+                <h3>Bubble Scarf</h3>
+                <p>Periode Laporan: 
+                    <?php
+                    if ($periode == 'perhari') {
+                        echo date('d-m-Y', strtotime($tanggal));
+                    } elseif ($periode == 'perbulan') {
+                        echo date('F Y', strtotime($tahun . '-' . $bulan . '-01'));
+                    } elseif ($periode == 'pertahun') {
+                        echo $tahun;
+                    }
+                    ?>
+                </p>
+            </div>
+
             <table class="table">
                 <thead>
                     <tr>
@@ -209,25 +295,25 @@ $totalPages = ceil($totalRows / $limit);
                 </thead>
                 <tbody>
                     <?php 
-                    $last_id_penjualan = null; 
+                    $last_Id_penjualan = null; 
                     $rowspan_count = []; 
 
                     foreach ($rekap_penjualan as $data) {
-                        if (!isset($rowspan_count[$data['id_penjualan']])) {
-                            $rowspan_count[$data['id_penjualan']] = 0;
+                        if (!isset($rowspan_count[$data['Id_penjualan']])) {
+                            $rowspan_count[$data['Id_penjualan']] = 0;
                         }
-                        $rowspan_count[$data['id_penjualan']]++;
+                        $rowspan_count[$data['Id_penjualan']]++;
                     }
 
                     foreach ($rekap_penjualan as $data): 
                     ?>
                         <tr>
-                            <?php if ($last_id_penjualan !== $data['id_penjualan']): ?>
-                                <td rowspan="<?= $rowspan_count[$data['id_penjualan']] ?>"><?= $data['id_penjualan'] ?></td>
-                                <td rowspan="<?= $rowspan_count[$data['id_penjualan']] ?>"><?= $data['nama_pelanggan'] ?></td>
-                                <td rowspan="<?= $rowspan_count[$data['id_penjualan']] ?>"><?= $data['tanggal_penjualan'] ?></td>
-                                <td rowspan="<?= $rowspan_count[$data['id_penjualan']] ?>">Rp. <?= number_format($data['total_harga'], 0, ',', '.') ?></td>
-                                <?php $last_id_penjualan = $data['id_penjualan']; ?>
+                            <?php if ($last_Id_penjualan !== $data['Id_penjualan']): ?>
+                                <td rowspan="<?= $rowspan_count[$data['Id_penjualan']] ?>"><?= $data['Id_penjualan'] ?></td>
+                                <td rowspan="<?= $rowspan_count[$data['Id_penjualan']] ?>"><?= $data['nama_pelanggan'] ?></td>
+                                <td rowspan="<?= $rowspan_count[$data['Id_penjualan']] ?>"><?= $data['tanggal_penjualan'] ?></td>
+                                <td rowspan="<?= $rowspan_count[$data['Id_penjualan']] ?>">Rp. <?= number_format($data['total_harga'], 0, ',', '.') ?></td>
+                                <?php $last_Id_penjualan = $data['Id_penjualan']; ?>
                             <?php endif; ?>
                             <td><?= $data['nama_produk'] ?></td>
                             <td><?= $data['jumlah_produk'] ?></td>
@@ -243,6 +329,15 @@ $totalPages = ceil($totalRows / $limit);
                     </tr>
                 </tfoot>
             </table>
+
+              <!-- TTD -->
+              <div class="ttd" style=" margin-top:20px">
+    <h4>Tanggal Cetak: <?php echo date('d-m-Y'); ?></h4>
+    <p>Yang Bertanda Tangan,</p>
+    <div style="border-top: none; width: 200px; margin-top: 50px; margin-left:100%;"></div>
+    <p><?php echo htmlspecialchars($username); ?></p>
+</div>
+
          
            
                        <!-- Pagination -->
