@@ -24,6 +24,7 @@ $searchKeyword = $_GET['search'] ?? '';
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
     <link rel="stylesheet" href="tabel.css">
+
     
 </head>
 <body>
@@ -34,7 +35,7 @@ $searchKeyword = $_GET['search'] ?? '';
         <header>
             <h2>
                 <label>
-                    <span class="las la-bars"></span>
+                    <span class="uil uil-slack"></span>
                 </label>
                 Master Barang
             </h2>
@@ -87,10 +88,9 @@ $searchKeyword = $_GET['search'] ?? '';
                 </thead>
             
                     <?php
-                     // Ambil nomor halaman dari URL (default: halaman 1)
                      $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-                     $limit = 5; // Jumlah data per halaman
-                     $offset = ($page - 1) * $limit; // Hitung offset 
+                     $limit = 5; 
+                     $offset = ($page - 1) * $limit; 
 
                     $sql = "SELECT * FROM produk";
 
@@ -101,10 +101,9 @@ $searchKeyword = $_GET['search'] ?? '';
                                   OR stok LIKE '%$searchKeyword%'";
                     }
 
-                    $sql .= " LIMIT $limit OFFSET $offset"; // Tambahkan LIMIT dan OFFSET
+                    $sql .= " LIMIT $limit OFFSET $offset"; 
                     $result = $conn->query($sql);
 
-                    // Query untuk menghitung total data
                     $totalDataQuery = "SELECT COUNT(*) as total FROM produk";
 
                     if (!empty($searchKeyword)) {
@@ -116,7 +115,7 @@ $searchKeyword = $_GET['search'] ?? '';
 
                     $totalDataResult = $conn->query($totalDataQuery);
                     $totalData = $totalDataResult->fetch_assoc()['total'];
-                    $totalPages = ceil($totalData / $limit); // Hitung total halaman
+                    $totalPages = ceil($totalData / $limit); 
                     ?>
 
                     <tbody>

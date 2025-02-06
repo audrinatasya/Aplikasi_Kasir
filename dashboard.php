@@ -33,7 +33,7 @@ $role = $_SESSION['role'];
 <header>
 <h2>
     <label>
-        <span class="las la-bars"></span>
+        <span class="uil uil-slack"></span>
     </label>
     Dashboard
 </h2>
@@ -60,34 +60,8 @@ $role = $_SESSION['role'];
 <!-- Dashboard Content -->
 <div class="main-content">
     <main>
-        <div class="cards">
-            <div class="card-single">
-                <div>
-                    <h1>2</h1>
-                    <span>Users</span>
-                </div>
-                <div>
-                    <span class="las la-users"></span>
-                </div>
-            </div>
-            <div class="card-single">
-                <div>
-                    <h1>6</h1>
-                    <span>Products</span>
-                </div>
-                <div>
-                    <span class="las la-box"></span>
-                </div>
-            </div>
-            <div class="card-single">
-                <div>
-                    <h1>0</h1>
-                    <span>Laporan</span>
-                </div>
-                <div>
-                    <span class="las la-dollar-sign"></span>
-                </div>
-            </div>
+        <div class="img-dashboard">
+           <img src="img/dashboard_BubbleScarf.jpg" alt="dashboard">
         </div>
     </main>
 </div>

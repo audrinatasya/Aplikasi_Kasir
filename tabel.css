@@ -113,6 +113,7 @@ i.user-plus, i.book-medical{
     font-size: 14px;
     color: rgb(160, 92, 223);
     font-weight: bold;
+    
 }
 
 .search-btn {
@@ -193,6 +194,7 @@ i.uil-search{
     background-color: #fafafa;
     transition: border-color 0.3s ease;
     text-align: center;
+    cursor: pointer; 
 }
 
 .filter-form select:focus {
@@ -212,6 +214,7 @@ i.uil-search{
     background-color: #fafafa;
     transition: border-color 0.3s ease;
     text-align: center;
+    cursor: pointer; 
 }
 
 .filter-form input:focus {
@@ -224,10 +227,58 @@ i.uil-search{
     border-color: #4A90E2;
 }
 
-/* Responsive Design */
+.no-print{
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1); 
+    padding: 10px; 
+    background-color: cornflowerblue;
+    color: white; 
+    border: none; 
+    cursor: pointer; 
+    border-radius:10px; 
+    font-weight:bold;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    table, table * {
+        visibility: visible;
+    }
+
+    .pagination, .no-print {
+        display: none !important;
+    }
+
+    table {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+    .table {
+    width: 100%;
+    border-collapse: collapse;
+    }
+   
+    .table tr {
+    color: black;
+    }
+
+    .judul-laporan {
+    text-align: center;
+    font-size: 100%;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+
+}
+
 @media (max-width: 900px) {
     .filter-form {
         width: 100%;
         padding: 20px;
     }
 }
+

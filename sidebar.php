@@ -17,7 +17,7 @@ if (!$role) {
     exit();
 }
 
-echo 'Role: ' . $role;
+//echo 'Role: ' . $role;
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +39,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <div class="sidebar">
     <div class="sidebar-brand">
     <img class="img-logo" src="img/logo.JPG"  alt="Logo" >
-        <h2><span ></span> <?= htmlspecialchars("Bubble Scraft") ?></h2>
+        <h2><span ></span> <?= htmlspecialchars("Bubble Scarf") ?></h2>
     </div>
 
     <div class="sidebar-menu">
