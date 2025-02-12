@@ -26,17 +26,20 @@ $searchKeyword = $_GET['search'] ?? '';
 <body>
 
 <header>
-    <h2>
-        <label>
-            <span class="uil uil-slack"></span>
-        </label>
-        Transaksi
-    </h2>
+        <h2>
+            <label id="menu-toggle">
+                 <!-- <span class="uil uil-bars"></span> -->
+                 <span class="bars"> <img src="asset/bars.svg" width="25px" height="25px"> </span>
+            </label>
+                 Transaksi
+        </h2>
+
+    
 
     <!-- FORM SEARCH -->
     <form method="GET" action="cart.php" class="search-wrapper">
         <input type="text" name="search" placeholder="Cari produk..." value="<?php echo htmlspecialchars($searchKeyword); ?>" class="search-input">
-        <button type="submit" class="search-btn"><i class="uil uil-search uil-search"></i></button>
+        <button type="submit" class="search-btn"><i class="uil.search"></i> <img src="asset/search.svg" width="25px" height="25px"  margin-right: 20px;></button> 
     </form>
 
     <?php

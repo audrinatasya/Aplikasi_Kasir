@@ -25,12 +25,15 @@ $searchKeyword = $_GET['search'] ?? '';
 <body>
 
 <header>
-            <h2>
-                <label>
-                    <span class="uil uil-slack"></span>
-                </label>
-                Master User
-            </h2>
+        <h2>
+            <label id="menu-toggle">
+                <!-- <span class="uil uil-bars"></span> -->
+                <span class="bars"> <img src="asset/bars.svg" width="25px" height="25px"> </span>
+            </label>
+                 Master User
+        </h2>
+
+
 
         <?php
             $queryUser = "SELECT foto FROM user WHERE username = '$username'";
@@ -57,11 +60,11 @@ $searchKeyword = $_GET['search'] ?? '';
             <div class="header-tools">
                 <form method="GET" action="master_user.php" class="search-box">
                     <input type="text" name="search" placeholder="Search user..." class="search-input" value="<?php echo htmlspecialchars($searchKeyword); ?>">
-                    <button type="submit" class="search-btn"><i class="uil uil-search uil-search"></i></button>
+                    <button type="submit" class="search-btn"><i class="uil.search"></i> <img src="asset/search.svg" width="20px" height="20px"></button> 
                 </form>
 
                 <a href="tambah_user.php" class="btn-tambah-data"> 
-                    <i class="uil uil-user-plus user-plus"></i> Tambah User
+                    <i class="user.plus"><img src="asset/user-plus.svg" width="15px" height="15px"></i> Tambah User
                 </a>
             </div>
 
@@ -81,10 +84,9 @@ $searchKeyword = $_GET['search'] ?? '';
                 </thead>
 
                     <?php
-                    // Ambil nomor halaman dari URL (default: halaman 1)
                     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-                    $limit = 5; // Jumlah data per halaman
-                    $offset = ($page - 1) * $limit; // Hitung offset
+                    $limit = 5; 
+                    $offset = ($page - 1) * $limit;
 
                     $sql = "SELECT u.Id_user, u.Id_role, r.nama_role, u.username, u.TTL, u.jenis_kelamin, u.alamat, u.no_tlp, u.foto
                             FROM user u 
@@ -98,10 +100,9 @@ $searchKeyword = $_GET['search'] ?? '';
                                   OR u.no_tlp LIKE '%$searchKeyword%'";
                     }
 
-                    $sql .= " LIMIT $limit OFFSET $offset"; // Tambahkan LIMIT dan OFFSET
+                    $sql .= " LIMIT $limit OFFSET $offset"; 
                     $result = $conn->query($sql);
 
-                    // Query untuk menghitung total data
                     $totalDataQuery = "SELECT COUNT(*) as total FROM user u 
                                     JOIN role r ON u.Id_role = r.Id_role";
 
@@ -115,7 +116,7 @@ $searchKeyword = $_GET['search'] ?? '';
 
                     $totalDataResult = $conn->query($totalDataQuery);
                     $totalData = $totalDataResult->fetch_assoc()['total'];
-                    $totalPages = ceil($totalData / $limit); // Hitung total halaman
+                    $totalPages = ceil($totalData / $limit); 
                     ?>
 
                     <tbody>
@@ -142,8 +143,8 @@ $searchKeyword = $_GET['search'] ?? '';
 
                             echo "</td>
                                     <td>
-                                        <a href='edit_user.php?id={$row['Id_user']}' class='btn btn-edit'><i class='uil uil-edit'></i></a>
-                                        <a href='proses_user.php?id={$row['Id_user']}' class='btn btn-delete'><i class='uil uil-trash-alt'></i></a>
+                                        <a href='edit_user.php?id={$row['Id_user']}' class='btn btn-edit'><img src='asset/edit.svg' width='25px' height='25px'></a>
+                                        <a href='proses_user.php?id={$row['Id_user']}' class='btn btn-delete'><img src='asset/trash-alt.svg' width='25px' height='25px'></a>
                                     </td>
                                 </tr>";
                         }

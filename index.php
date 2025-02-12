@@ -18,11 +18,12 @@ include 'config.php';
     <?php
     if (isset($_GET['message']) && !empty($_GET['message'])) {
         $alert_class = strpos($_GET['message'], 'salah') !== false || strpos($_GET['message'], 'tidak ditemukan') !== false ? 'alert-danger' : 'alert-success';
-        echo "<div class='alert $alert_class' role='alert'>" . htmlspecialchars(urldecode($_GET['message'])) . "</div>";
+        echo "<div class='alert $alert_class fade-in' role='alert'>" . htmlspecialchars(urldecode($_GET['message'])) . "</div>";
     }
-
-    
     ?>
+</div>
+
+
 </div>
 
 <section class="home">
@@ -38,13 +39,6 @@ include 'config.php';
                     <input type="password" name="password" placeholder="Enter your password" required />
                     <i class="uil uil-lock password"></i>
                     <i class="uil uil-eye-slash pw-hide" aria-label="Show/Hide Password"></i>
-                </div>
-                <div class="option-field">
-                    <span class="checkbox">
-                        <input type="checkbox" id="check">
-                        <label for="check"> Remember me</label>
-                    </span>
-                   
                 </div>
                 <button type="submit" class="button"> Login </button>
             </form>

@@ -16,3 +16,5 @@ const type = message && (message.includes('salah') || message.includes('tidak di
 if (message) {
     showNotification(decodeURIComponent(message), type);
 }
+
+

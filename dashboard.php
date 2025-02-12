@@ -13,9 +13,7 @@ if (!isset($_SESSION['username'])) {
 
 $username = $_SESSION['username'];
 $role = $_SESSION['role'];
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,19 +22,16 @@ $role = $_SESSION['role'];
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-
 <!-- Header Content -->
 <header>
-<h2>
-    <label>
-        <span class="uil uil-slack"></span>
-    </label>
-    Dashboard
-</h2>
+    <h2>
+        Dashboard
+    </h2>
 
     <?php
         $queryUser = "SELECT foto FROM user WHERE username = '$username'";
@@ -46,10 +41,11 @@ $role = $_SESSION['role'];
         if (!$userData) {
             die("User data not found.");
         }
-        $fotoUser = !empty($userData['foto']) ? 'uploads/users/' . $userData['foto'] : 'img/default.jpg'; ?>
+        $fotoUser = !empty($userData['foto']) ? 'uploads/users/' . $userData['foto'] : 'img/default.jpg';
+    ?>
 
     <div class="user-wrapper">
-    <img src="<?php echo htmlspecialchars($fotoUser); ?>" width="40px" height="30px" alt="User">
+        <img src="<?php echo htmlspecialchars($fotoUser); ?>" width="40px" height="30px" alt="User">
         <div>
             <h4><?php echo htmlspecialchars($username); ?></h4>
             <small><?php echo htmlspecialchars($role); ?></small>
@@ -61,10 +57,18 @@ $role = $_SESSION['role'];
 <div class="main-content">
     <main>
         <div class="img-dashboard">
-           <img src="img/dashboard_BubbleScarf.jpg" alt="dashboard">
+            <img src="img/dashboard_BubbleScarf.jpg" alt="dashboard">
         </div>
     </main>
 </div>
+
+<script>
+    document.getElementById("menu-toggle").addEventListener("click", function() {
+        document.querySelector(".sidebar").classList.toggle("collapsed");
+        document.querySelector(".main-content").classList.toggle("collapsed");
+        document.querySelector("header").classList.toggle("collapsed");
+    });
+</script>
 
 </body>
 </html>

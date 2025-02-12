@@ -1,104 +1,16 @@
 <?php
 session_start();
+session_regenerate_id(true);
 
-session_regenerate_Id(true); ?>
-
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Penjualan</title>
-    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-    <link rel="stylesheet" href="tabel.css">
-    
-
-<style>
-   @media print {
-    body * {
-        visibility: hidden;
-        margin: 0;
-        padding: 0;
-    }
-
-    .print-section,
-    .print-section *,
-    .table,
-    .table *,
-    .ttd,
-    .ttd * {
-        visibility: visible;
-    }
-
-
-    .print-section {
-           position: absolute;
-           top: 0;
-           left: 0;
-           width: 100%;
-           text-align: center;
-         
-       }
-
-       .table {
-    
-            margin: 0; /* Hapus margin */
-            border-collapse: collapse; /* Hapus jarak antar border */
-            text-align: center;
-     
-       }
-
-       .table th,
-       .table td {
-           border: 1px solid black;
-           padding: 8px;
-       }
-
-
-    .judul-laporan,
-       h3,
-       p {
-           margin-bottom: 20px; /* Beri jarak lebih rapi */
-       }
-
-    .ttd {
-           text-align: right;
-           margin-top: 50px;
-           margin-right: 50px;
-       }
-
-       .ttd p {
-           margin: 0;
-           padding: 0;
-       }
-
-
-    .no-print {
-        display: none !important;
-    }
-}
-</style>
-
-
-
-
-
-</head>
-<body>
-
-<?php
 include 'config.php';
 include 'sidebar.php';
-
- /* FUNGSI PHP */
 
 $username = $_SESSION['username'];
 $role = $_SESSION['role'];
 
 $searchKeyword = isset($_GET['search']) ? trim($_GET['search']) : '';
 
-function getRekap($periode, $tanggal = null, $bulan = null, $tahun = null, $searchKeyword = '', $limit = 10, $offset = 0) {
+function getRekap($periode, $tanggal = null, $bulan = null, $tahun = null, $searchKeyword = '') {
     global $conn;
 
     $where = "1=1"; 
@@ -115,41 +27,27 @@ function getRekap($periode, $tanggal = null, $bulan = null, $tahun = null, $sear
         $where .= " AND (pr.nama_produk LIKE '%$searchKeyword%' OR p.Id_penjualan LIKE '%$searchKeyword%')";
     }
 
-        $query = "SELECT 
-                    (@row_number := @row_number + 1) AS nomor_transaksi,
-                    p.Id_penjualan, 
-                    p.tanggal_penjualan, 
-                    pr.nama_produk, 
-                    dp.jumlah_produk, 
-                    pr.harga, 
-                    dp.subtotal, 
-                    p.total_harga,
-                    pl.nama_pelanggan
-                    FROM (SELECT @row_number := 0) AS init, penjual p
-                    JOIN detail_penjualan dp ON p.Id_penjualan = dp.Id_penjualan
-                    JOIN pelanggan pl ON dp.Id_penjualan = pl.Id_pelanggan
-                    JOIN produk pr ON dp.Id_produk = pr.Id_produk
-                    WHERE $where
-                    ORDER BY p.tanggal_penjualan ASC, p.Id_penjualan ASC
-                    LIMIT $limit OFFSET $offset";
+    $query = "SELECT 
+                p.Id_penjualan, 
+                p.tanggal_penjualan, 
+                pr.nama_produk, 
+                dp.jumlah_produk, 
+                pr.harga, 
+                dp.subtotal, 
+                p.total_harga,
+                pl.nama_pelanggan
+              FROM penjual p
+              JOIN detail_penjualan dp ON p.Id_penjualan = dp.Id_penjualan
+              JOIN pelanggan pl ON p.Id_pelanggan = pl.Id_pelanggan
+              JOIN produk pr ON dp.Id_produk = pr.Id_produk
+              WHERE $where
+              ORDER BY p.tanggal_penjualan ASC, p.Id_penjualan ASC";
 
     $result = mysqli_query($conn, $query);
     $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-    $totalQuery = "SELECT COUNT(*) AS total_rows
-                   FROM penjual p
-                   JOIN detail_penjualan dp ON p.Id_penjualan = dp.Id_penjualan
-                   JOIN produk pr ON dp.Id_produk = pr.Id_produk
-                   JOIN pelanggan pl ON dp.Id_penjualan = pl.Id_pelanggan
-                   WHERE $where";
-    $totalResult = mysqli_query($conn, $totalQuery);
-    $totalData = mysqli_fetch_assoc($totalResult);
-
     $totalPenjualanQuery = "SELECT SUM(p.total_harga) AS total_penjualan
                             FROM penjual p
-                            JOIN detail_penjualan dp ON p.Id_penjualan = dp.Id_penjualan
-                            JOIN produk pr ON dp.Id_produk = pr.Id_produk
-                            JOIN pelanggan pl ON dp.Id_penjualan = pl.Id_pelanggan
                             WHERE $where";
 
     $totalPenjualanResult = mysqli_query($conn, $totalPenjualanQuery);
@@ -157,46 +55,45 @@ function getRekap($periode, $tanggal = null, $bulan = null, $tahun = null, $sear
     
     return [
         'data' => $data,
-        'total_rows' => $totalData['total_rows'],
         'total_penjualan' => $totalPenjualanData['total_penjualan'] ?? 0 
     ];
 }
 
-
 $periode = isset($_GET['periode']) ? $_GET['periode'] : 'perhari';
 $tanggal = isset($_GET['tanggal']) ? $_GET['tanggal'] : date('Y-m-d');
 $tahun = isset($_GET['tahun']) ? $_GET['tahun'] : date('Y');
-
-
 $bulan = date('m'); 
 if ($periode == 'perbulan' && isset($_GET['bulan'])) {
     list($tahun, $bulan) = explode('-', $_GET['bulan']);
 }
 
-$limit = 10; 
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-$result = getRekap($periode, $tanggal, $bulan, $tahun, $searchKeyword, $limit, $offset);
-
+$result = getRekap($periode, $tanggal, $bulan, $tahun, $searchKeyword);
 $rekap_penjualan = $result['data'];
-$totalRows = $result['total_rows'];
 $total_penjualan = $result['total_penjualan'];
-
-$totalPages = ceil($totalRows / $limit);
-
 ?>
 
 
-  <!-- HTML -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Penjualan</title>
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+    <link rel="stylesheet" href="tabel.css">
+</head>
+<body>
 
 <header>
-    <h2 class="judul-laporan">
-        <label>
-            <span class="uil uil-slack"></span>
-        </label>
-        Laporan Penjualan
-    </h2>
+
+        <h2 class="judul-laporan">
+            <label id="menu-toggle">
+                 <!-- <span class="uil uil-bars"></span> -->
+                 <span class="bars"> <img src="asset/bars.svg" width="25px" height="25px"> </span>
+            </label>
+            Laporan
+        </h2>
 
     <?php
     $queryUser = "SELECT foto FROM user WHERE username = '$username'";
@@ -246,25 +143,21 @@ $totalPages = ceil($totalRows / $limit);
                 <form method="GET" action="laporan.php" class="search-box" style="margin-right: 50px;">
                     <input type="text" name="search" placeholder="Search produk..." class="search-input" value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>" >
                     
-                    
                     <input type="hidden" name="periode" value="<?= htmlspecialchars($periode) ?>">
                     <input type="hidden" name="tanggal" value="<?= htmlspecialchars($tanggal) ?>">
                     <input type="hidden" name="bulan" value="<?= htmlspecialchars($bulan) ?>">
                     <input type="hidden" name="tahun" value="<?= htmlspecialchars($tahun) ?>">
                     
                     <button type="submit" class="search-btn">
-                        <i class="uil uil-search uil-search"></i>
+                    <i class="uil.search"></i> <img src="asset/search.svg" width="20px" height="20px">
                     </button>
                 </form>
 
-                 <!-- Tombol Print -->
-                 <button onclick="window.print()" class="no-print">Print Laporan</button>
-                </div>
-
+                <!-- Tombol Print -->
+                <button onclick="window.print()" class="no-print">Print Laporan</button>
             </div>
 
-          
-            <div class="print-section" style="text-align: center; ">
+            <div class="print-section" style="text-align: center;">
                 <h2 class="judul-laporan">Laporan Penjualan</h2>
                 <h3>Bubble Scarf</h3>
                 <p>Periode Laporan: 
@@ -330,36 +223,17 @@ $totalPages = ceil($totalRows / $limit);
                 </tfoot>
             </table>
 
-              <!-- TTD -->
-              <div class="ttd" style=" margin-top:20px">
-    <h4>Tanggal Cetak: <?php echo date('d-m-Y'); ?></h4>
-    <p>Yang Bertanda Tangan,</p>
-    <div style="border-top: none; width: 200px; margin-top: 50px; margin-left:100%;"></div>
-    <p><?php echo htmlspecialchars($username); ?></p>
-</div>
-
-         
-           
-                       <!-- Pagination -->
-            <div class="pagination">
-                <?php if ($page > 1): ?>
-                    <a href="?page=<?php echo $page - 1; ?>&search=<?php echo htmlspecialchars($searchKeyword); ?>&periode=<?php echo htmlspecialchars($periode); ?>&tanggal=<?php echo htmlspecialchars($tanggal); ?>&bulan=<?php echo htmlspecialchars($bulan); ?>&tahun=<?php echo htmlspecialchars($tahun); ?>" class="page-link">Previous</a>
-                <?php endif; ?>
-
-                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                    <a href="?page=<?php echo $i; ?>&search=<?php echo htmlspecialchars($searchKeyword); ?>&periode=<?php echo htmlspecialchars($periode); ?>&tanggal=<?php echo htmlspecialchars($tanggal); ?>&bulan=<?php echo htmlspecialchars($bulan); ?>&tahun=<?php echo htmlspecialchars($tahun); ?>" class="page-link <?php echo ($page == $i) ? 'active' : ''; ?>">
-                        <?php echo $i; ?>
-                    </a>
-                <?php endfor; ?>
-
-                <?php if ($page < $totalPages): ?>
-                    <a href="?page=<?php echo $page + 1; ?>&search=<?php echo htmlspecialchars($searchKeyword); ?>&periode=<?php echo htmlspecialchars($periode); ?>&tanggal=<?php echo htmlspecialchars($tanggal); ?>&bulan=<?php echo htmlspecialchars($bulan); ?>&tahun=<?php echo htmlspecialchars($tahun); ?>" class="page-link">Next</a>
-                <?php endif; ?>
+            <!-- TTD -->
+            <div class="ttd" style="margin-top: 20px;">
+                <h4>Tanggal Cetak: <?php echo date('d-m-Y'); ?></h4>
+                <p>Yang Bertanda Tangan,</p>
+                <div style="border-top: none; width: 200px; margin-top: 50px; margin-left: 100%;"></div>
+                <p><?php echo htmlspecialchars($username); ?></p>
             </div>
-
         </div>
     </main>
 </div>
+
 
 </body>
 </html>

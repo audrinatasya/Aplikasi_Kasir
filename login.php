@@ -21,13 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['username'] = $user['username'];
         $_SESSION['role'] = $user['nama_role'];
 
-        header("Location: dashboard.php");
+        header("Location: dashboard.php?message=" . urlencode("🎉 Selamat datang, {$user['username']}! Anda berhasil login."));
         exit();
     } else {
-    
-        $message = "Username atau Password salah!";
-        header("Location: login.php?message=" . urlencode($message));
+        header("Location: index.php?message=" . urlencode("❌ Password / Username salah! / Silakan coba lagi."));
         exit();
     }
+} else {
+    header("Location: index.php?message=" . urlencode("⚠️ Username tidak ditemukan! Periksa kembali."));
+    exit();
 }
 ?>

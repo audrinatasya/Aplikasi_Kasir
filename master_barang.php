@@ -32,13 +32,14 @@ $searchKeyword = $_GET['search'] ?? '';
 
   <!-- Header Content -->
 
-        <header>
-            <h2>
-                <label>
-                    <span class="uil uil-slack"></span>
-                </label>
-                Master Barang
-            </h2>
+    <header>
+        <h2>
+            <label id="menu-toggle">
+                 <!-- <span class="uil uil-bars"></span> -->
+                 <span class="bars"> <img src="asset/bars.svg" width="25px" height="25px"> </span>
+            </label>
+            Master Barang
+        </h2>
 
         <?php
             $queryUser = "SELECT foto FROM user WHERE username = '$username'";
@@ -67,11 +68,11 @@ $searchKeyword = $_GET['search'] ?? '';
             <div class="header-tools">
                 <form method="GET" action="master_barang.php" class="search-box">
                     <input type="text" name="search" placeholder="Search produk..." class="search-input" value="<?php echo htmlspecialchars($searchKeyword); ?>">
-                    <button type="submit" class="search-btn"><i class="uil uil-search uil-search"></i></button>
+                    <button type="submit" class="search-btn"><i class="uil.search"></i> <img src="asset/search.svg" width="20px" height="20px"></button> 
                 </form>
 
                 <a href="tambah_barang.php" class="btn-tambah-data"> 
-                    <i class="uil uil-user-plus user-plus"></i> Tambah barang
+                <i class="user.plus"><img src="asset/user-plus.svg" width="15px" height="15px"></i> Tambah barang
                 </a>
             </div>
 
@@ -138,8 +139,8 @@ $searchKeyword = $_GET['search'] ?? '';
                             
                              echo "</td>
                                     <td>
-                                        <a href='edit_barang.php?id=" . $row['Id_produk'] . "' class='btn btn-edit'> <i class='uil uil-edit'></i> </a>
-                                        <a href='proses_barang.php?id=" . $row['Id_produk'] . "' class='btn btn-delete'> <i class='uil uil-trash-alt'></i> </a>
+                                        <a href='edit_barang.php?id=" . $row['Id_produk'] . "' class='btn btn-edit'> <img src='asset/edit.svg' width='25px' height='25px'> </a>
+                                        <a href='proses_barang.php?id=" . $row['Id_produk'] . "' class='btn btn-delete'> <img src='asset/trash-alt.svg' width='25px' height='25px'> </a>
                                     </td>
                                 </tr>";
                         }

@@ -61,7 +61,8 @@ $total_harga = array_reduce($cart, function ($carry, $item) {
     return $carry + ($item['harga'] * $item['jumlah']);
 }, 0);
 
-$tanggal_penjualan = date('Y-m-d H:i:s');
+//$tanggal_penjualan = date('Y-m-d H:i:s');
+$tanggal_penjualan = date('Y-m-d');
 $kembalian = 0;
 $error_message = '';
 
@@ -121,6 +122,25 @@ $daftar_barang = isset($cart) ? $cart : [];
     <title>Pembayaran</title>
     <link rel="stylesheet" href="transaksi.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+    <style>
+         @media print {
+        body * {
+            visibility: hidden;
+        }
+        .transaction-success, .transaction-success * {
+            visibility: visible;
+        }
+        .transaction-success {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+        .no-print {
+                display: none !important;
+            }
+    }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -191,7 +211,7 @@ $daftar_barang = isset($cart) ? $cart : [];
 <!-- Transaksi Berhasil -->
 <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($jumlah_pembayaran) && empty($error_message)): ?>
     <div class="transaction-success">
-        <h3>Transaksi Berhasil</h3>
+        <h2>Transaksi Berhasil</h2>
        
         <div class="info">
             <p><strong>Nama Pelanggan:</strong><span><?= htmlspecialchars($nama_pelanggan) ?></span></p>
@@ -202,12 +222,11 @@ $daftar_barang = isset($cart) ? $cart : [];
         <h4>Detail Barang:</h4>
         <ul class="item-list">
             <?php foreach ($daftar_barang as $barang): 
-
                 $subtotal = $barang['jumlah'] * $barang['harga'];
             ?>
                 <li>
                     <span><?= htmlspecialchars($barang['nama_produk']) ?> (<?= $barang['jumlah'] ?> pcs)</span>
-                    <span>Rp. <?= number_format($subtotal, 0, ',', '.') ?></span> <!-- Tampilkan subtotal -->
+                    <span>Rp. <?= number_format($subtotal, 0, ',', '.') ?></span> 
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -219,11 +238,15 @@ $daftar_barang = isset($cart) ? $cart : [];
             <p><strong>Kembalian:</strong><span>Rp. <?= number_format($kembalian, 0, ',', '.') ?></span></p>
         </div>
         <hr class="divider">
-        <div class="action-buttons">
+        <div class="action-buttons no-print">
             <a href="cart.php" class="btn">Kembali ke Transaksi</a>
+            <button onclick="window.print()" class="btn">Cetak Struk</button>
         </div>
     </div>
 <?php endif; ?>
+
+</body>
+</html>
 
 </body>
 </html>

@@ -79,35 +79,11 @@ button {
 }
 
 button:hover {
-    background-color: #e65c97;  /* Warna pink lebih gelap saat hover */
+    background-color: #e65c97;  
     transform: scale(1.05);
 }
 
 
-/* Tombol kembali */
-.back-button {
-    text-align: center;
-    margin-top: 30px;
-}
-
-.back-button a {
-    text-decoration: none;
-    display: inline-block;
-    background-color: #f8cce7;
-    color: #ff77c4;
-    padding: 10px 18px;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 30px;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.back-button a:hover {
-    background-color: #f1a1c3;
-    transform: scale(1.05);
-}
-
-/* Desain kartu produk */
 .product-list {
     display: flex;
     flex-wrap: wrap;
@@ -139,7 +115,6 @@ button:hover {
     margin-inline-start: 17px;
 }
 
-/* Gaya khusus untuk tombol tambah (+) dan kurang (-) */
 .product-card a[href*="tambah"],
 .product-card a[href*="kurang"] {
     display: inline-block;
@@ -160,35 +135,31 @@ button:hover {
     margin-bottom: 7px;
 }
 
-/* Gaya khusus untuk tombol tambah (+) */
 .product-card a[href*="tambah"] {
-    background-color: #28A745; /* Warna hijau */
+    background-color: #28A745; 
 }
 
-/* Gaya khusus untuk tombol kurang (-) */
 .product-card a[href*="kurang"] {
-    background-color: #DC3545; /* Warna merah */
+    background-color: #DC3545; 
     margin-left: 60%;
   
 }
 
-/* Efek hover untuk tombol tambah dan kurang */
 .product-card a[href*="tambah"]:hover,
 .product-card a[href*="kurang"]:hover {
     opacity: 0.9;
-    transform: scale(1.1); /* Sedikit membesar saat dihover */
+    transform: scale(1.1); 
 }
 
-/* Efek aktif (saat diklik) */
 .product-card a[href*="tambah"]:active,
 .product-card a[href*="kurang"]:active {
-    transform: scale(0.95); /* Sedikit mengecil saat diklik */
+    transform: scale(0.95); 
 }
 
 .product-card .delete-button {
     position: absolute;
     bottom: 10px;
-    right: 20px; /* Posisi di kanan bawah */
+    right: 20px; 
     padding: 5px 10px;
     background-color: #da2c88;
     color: #ffffff;
@@ -203,9 +174,6 @@ button:hover {
     background-color: #c42d78;
 }
 
-
-
-/* Grand Total */
 .grand-total {
     margin-top: 35px;
     font-size: 20px;
@@ -220,49 +188,6 @@ button:hover {
 }
 
 
-/* Kartu pembayaran */
-.payment-card {
-    background-color: #fef2f9;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/* Item pembayaran */
-.payment-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    font-weight: bold;
-    font-size: 30px;
-}
-
-.payment-item label {
-    font-weight: 700;
-    color: #e65c97;;
-    font-size: 16px;
-}
-
-.payment-item input {
-    width: 60%;
-    padding: 12px;
-    font-size: 16px;
-    border-radius: 12px;
-    border: 1px solid #f0d7e5;
-    background-color: #fef2f9;
-    transition: border-color 0.3s;
-}
-
-.payment-item input:focus {
-    border-color: #ff77c4;
-    outline: none;
-}
-
-/* Tombol bayar */
 button {
     padding: 12px 22px;
     background-color: rgb(197, 120, 197);
@@ -296,7 +221,7 @@ button:hover {
 
 .transaction-success h3 {
     text-align: center;
-    color: #f32291;
+    color: #da2c88;
     margin-bottom: 15px;
 }
 
@@ -343,7 +268,7 @@ button:hover {
 
 .transaction-success .action-buttons {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .transaction-success .btn {
@@ -354,7 +279,7 @@ button:hover {
     border: none;
     border-radius: 10px;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
     transition: background-color 0.3s;
 }
 

@@ -11,17 +11,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_produk = $input['Id_produk'];
     $produk_sudah_ada = false;
 
-    // Cek apakah produk sudah ada di dalam cart
     foreach ($_SESSION['cart'] as $key => $item) {
         if ((int) $item['Id_produk'] === (int) $id_produk) {
-            // Jika produk sudah ada, tambahkan jumlahnya
             $_SESSION['cart'][$key]['jumlah'] += $input['jumlah'];
             $produk_sudah_ada = true;
             break;
         }
     }
 
-    // Jika produk belum ada, tambahkan ke cart
     if (!$produk_sudah_ada) {
         $_SESSION['cart'][] = $input;
     }
