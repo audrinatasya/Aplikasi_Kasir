@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 05 Feb 2025 pada 08.26
+-- Waktu pembuatan: 12 Feb 2025 pada 08.37
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -40,40 +40,13 @@ CREATE TABLE `detail_penjualan` (
 --
 
 INSERT INTO `detail_penjualan` (`Id_detail`, `Id_penjualan`, `Id_produk`, `jumlah_produk`, `subtotal`) VALUES
-(1, 1, '3', 1, 35000.00),
-(2, 1, '5', 1, 35000.00),
-(3, 2, '3', 1, 35000.00),
-(4, 3, '6', 2, 70000.00),
-(5, 3, '6', 2, 70000.00),
-(6, 4, '5', 2, 70000.00),
-(7, 4, '6', 3, 105000.00),
-(8, 5, '1', 2, 70000.00),
-(9, 5, '3', 1, 35000.00),
-(10, 5, '4', 3, 105000.00),
-(11, 6, '2', 1, 35000.00),
-(12, 6, '5', 2, 70000.00),
-(13, 6, '6', 1, 35000.00),
-(14, 7, '1', 2, 70000.00);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `kategori_barang`
---
-
-CREATE TABLE `kategori_barang` (
-  `Id_kategori` int(11) NOT NULL,
-  `nama_kategori` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `kategori_barang`
---
-
-INSERT INTO `kategori_barang` (`Id_kategori`, `nama_kategori`) VALUES
-(1, 'Segi Empat '),
-(2, 'Pashmina Ceruty'),
-(3, 'Pashmina Dubai');
+(1, 1, '1', 1, 35000.00),
+(2, 1, '4', 1, 35000.00),
+(3, 1, '3', 1, 35000.00),
+(4, 2, '2', 2, 70000.00),
+(5, 2, '5', 2, 70000.00),
+(6, 3, '6', 1, 35000.00),
+(7, 4, '3', 3, 105000.00);
 
 -- --------------------------------------------------------
 
@@ -93,13 +66,10 @@ CREATE TABLE `pelanggan` (
 --
 
 INSERT INTO `pelanggan` (`Id_pelanggan`, `nama_pelanggan`, `alamat`, `no_telepon`) VALUES
-(1, 'a', 'a', '0897537'),
-(2, 'p', 'a', '0'),
-(3, 'Aud', 'Cmh', '8763'),
-(4, 'Audri', 'Bdg', '836749'),
-(5, 'Audrina', 'Cimahi', '085937640210'),
-(6, 'Tasya', 'Bandung', '0834952819'),
-(7, 'zahra', 'padalarang', '08123426452');
+(1, 'Audrina', 'Bandung', '085937640210'),
+(2, 'Tasya', 'Cimahi', '0892736452'),
+(3, 'Lenyta', 'Padalarang', '0897645312'),
+(4, 'Azahra', 'Cimahi Utara', '08372649813');
 
 -- --------------------------------------------------------
 
@@ -119,13 +89,10 @@ CREATE TABLE `penjual` (
 --
 
 INSERT INTO `penjual` (`Id_penjualan`, `tanggal_penjualan`, `total_harga`, `Id_pelanggan`) VALUES
-(1, '2025-01-31', 70000.00, 1),
-(2, '2025-01-31', 35000.00, 2),
-(3, '2025-01-31', 140000.00, 3),
-(4, '2025-01-31', 175000.00, 4),
-(5, '2025-02-05', 210000.00, 5),
-(6, '2025-02-05', 140000.00, 6),
-(7, '2025-02-05', 70000.00, 7);
+(1, '2025-01-21', 105000.00, 1),
+(2, '2025-02-03', 140000.00, 2),
+(3, '2025-02-12', 35000.00, 3),
+(4, '2025-02-12', 105000.00, 4);
 
 -- --------------------------------------------------------
 
@@ -146,12 +113,12 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`Id_produk`, `nama_produk`, `harga`, `stok`, `foto_produk`) VALUES
-(1, 'Scarf Paris Lavender', 35000.00, 81, 'silver-lavender-coksu.JPG'),
-(2, 'Scarf Paris Rose Pink', 35000.00, 36, 'biscuit-rosepink.JPG'),
-(3, 'Scarf Paris Silver', 35000.00, 87, 'silver-lavender-coksu.JPG'),
-(4, 'Scarf Paris Biscuit', 35000.00, 84, 'biscuit-rosepink.JPG'),
-(5, 'Scarf Paris Pistachio', 35000.00, 85, 'khaki-pistachio.JPG'),
-(6, 'Scarf Paris Coksu', 35000.00, 82, 'silver-lavender-coksu.JPG');
+(1, 'Scarf Paris Lavender', 35000.00, 78, 'silver-lavender-coksu.JPG'),
+(2, 'Scarf Paris Rose Pink', 35000.00, 34, 'biscuit-rosepink.JPG'),
+(3, 'Scarf Paris Silver', 35000.00, 82, 'silver-lavender-coksu.JPG'),
+(4, 'Scarf Paris Biscuit', 35000.00, 82, 'biscuit-rosepink.JPG'),
+(5, 'Scarf Paris Pistachio', 35000.00, 83, 'khaki-pistachio.JPG'),
+(6, 'Scarf Paris Coksu', 35000.00, 81, 'silver-lavender-coksu.JPG');
 
 -- --------------------------------------------------------
 
@@ -211,12 +178,6 @@ ALTER TABLE `detail_penjualan`
   ADD KEY `Id_penjualan` (`Id_penjualan`);
 
 --
--- Indeks untuk tabel `kategori_barang`
---
-ALTER TABLE `kategori_barang`
-  ADD PRIMARY KEY (`Id_kategori`);
-
---
 -- Indeks untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
@@ -256,25 +217,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `detail_penjualan`
 --
 ALTER TABLE `detail_penjualan`
-  MODIFY `Id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- AUTO_INCREMENT untuk tabel `kategori_barang`
---
-ALTER TABLE `kategori_barang`
-  MODIFY `Id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `Id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `Id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `penjual`
 --
 ALTER TABLE `penjual`
-  MODIFY `Id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `Id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `produk`
