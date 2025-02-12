@@ -74,7 +74,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <span>Laporan</span>
                 </a>
             </li>
-            <li class="logout">
+            <li class="logout" style="margin-top: 100px; font-weight: bold;">
                 <a href="logout.php" class="<?= ($current_page == 'logout.php') ? 'active' : '' ?>">
                     <span class="las la-sign-out-alt"></span>
                     <span>Logout</span>
