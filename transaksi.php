@@ -9,11 +9,11 @@ if (empty($_SESSION['cart'])) {
 }
 
 
-if (isset($_GET['action']) && isset($_GET['id_produk'])) {
-    $id_produk = (int) $_GET['id_produk'];
+if (isset($_GET['action']) && isset($_GET['Id_produk'])) {
+    $audri_Id_produk = (int) $_GET['Id_produk'];
     
-    foreach ($_SESSION['cart'] as $key => $item) {
-        if ((int) $item['Id_produk'] === $id_produk) {
+    foreach ($_SESSION['cart'] as $key => $audri_item) {
+        if ((int) $audri_item['Id_produk'] === $audri_Id_produk) {
             if ($_GET['action'] === 'tambah') {
                 $_SESSION['cart'][$key]['jumlah'] += 1;
             } elseif ($_GET['action'] === 'kurang') {
@@ -32,10 +32,10 @@ if (isset($_GET['action']) && isset($_GET['id_produk'])) {
 }
 
 if (isset($_GET['hapus_item']) && isset($_SESSION['cart'])) {
-    $id_produk_hapus = (int) $_GET['hapus_item'];
+    $audri_Id_produk_hapus = (int) $_GET['hapus_item'];
 
-    foreach ($_SESSION['cart'] as $key => $item) {
-        if ((int) $item['Id_produk'] === $id_produk_hapus) {
+    foreach ($_SESSION['cart'] as $key => $audri_item) {
+        if ((int) $audri_item['Id_produk'] === $audri_Id_produk_hapus) {
             unset($_SESSION['cart'][$key]);
             break;
         }
@@ -47,71 +47,71 @@ if (isset($_GET['hapus_item']) && isset($_SESSION['cart'])) {
     exit;
 }
 
-$cart = $_SESSION['cart'];
+$audri_cart = $_SESSION['cart'];
 
-if (isset($_SESSION['user_id'])) {
-    $id_pelanggan = $_SESSION['user_id'];
+if (isset($_SESSION['Id_user'])) {
+    $audri_Id_pelanggan = $_SESSION['Id_user'];
 } else {
-    $result = mysqli_query($conn, "SELECT IFNULL(MAX(Id_pelanggan), 0) + 1 AS next_id FROM pelanggan");
-    $row = mysqli_fetch_assoc($result);
-    $id_pelanggan = $row['next_id'];
+    $audri_result = mysqli_query($conn, "SELECT IFNULL(MAX(Id_pelanggan), 0) + 1 AS next_id FROM pelanggan");
+    $audri_row = mysqli_fetch_assoc($audri_result);
+    $audri_Id_pelanggan = $audri_row['next_id'];
 }
 
-$total_harga = array_reduce($cart, function ($carry, $item) {
-    return $carry + ($item['harga'] * $item['jumlah']);
+$audri_totalHarga = array_reduce($audri_cart, function ($carry, $audri_item) {
+    return $carry + ($audri_item['harga'] * $audri_item['jumlah']);
 }, 0);
 
-//$tanggal_penjualan = date('Y-m-d H:i:s');
-$tanggal_penjualan = date('Y-m-d');
-$kembalian = 0;
+//$audri_tanggalPenjualan = date('Y-m-d H:i:s');
+$audri_tanggalPenjualan = date('Y-m-d');
+$audri_kembalian = 0;
 $error_message = '';
 
 
-$nama_pelanggan = '';
-$alamat = '';
-$nomor_telepon = '';
-$jumlah_pembayaran = '';
+$audri_nama_pelanggan = '';
+$audri_alamat = '';
+$audri_nomor_telepon = '';
+$audri_jumlah_pembayaran = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['jumlah_pembayaran'])) {
-    $nama_pelanggan = mysqli_real_escape_string($conn, $_POST['nama_pelanggan']);
-    $alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
-    $nomor_telepon = mysqli_real_escape_string($conn, $_POST['nomor_telepon']);
-    $jumlah_pembayaran = (float) $_POST['jumlah_pembayaran'];
+    $audri_nama_pelanggan = mysqli_real_escape_string($conn, $_POST['nama_pelanggan']);
+    $audri_alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
+    $audri_nomor_telepon = mysqli_real_escape_string($conn, $_POST['nomor_telepon']);
+    $audri_jumlah_pembayaran = (float) $_POST['jumlah_pembayaran'];
 
-    if ($jumlah_pembayaran < $total_harga) {
+    if ($audri_jumlah_pembayaran < $audri_totalHarga) {
         $error_message = "Maaf, uang yang Anda bayarkan kurang. Silakan masukkan jumlah yang cukup.";
     } else {
-        if (!isset($_SESSION['user_id'])) {
-            $sql_pelanggan = "INSERT INTO pelanggan (nama_pelanggan, alamat, no_telepon) 
-                              VALUES ('$nama_pelanggan', '$alamat', '$nomor_telepon')";
-            mysqli_query($conn, $sql_pelanggan);
-            $id_pelanggan = mysqli_insert_id($conn);
+        if (!isset($_SESSION['Id_user'])) {
+            $audri_sql_pelanggan = "INSERT INTO pelanggan (nama_pelanggan, alamat, no_telepon) 
+                              VALUES ('$audri_nama_pelanggan', '$audri_alamat', '$audri_nomor_telepon')";
+            mysqli_query($conn, $audri_sql_pelanggan);
+            $audri_Id_pelanggan = mysqli_insert_id($conn);
         }
 
-        $sql_penjualan = "INSERT INTO penjual (tanggal_penjualan, total_harga, Id_pelanggan) 
-                          VALUES ('$tanggal_penjualan', '$total_harga', '$id_pelanggan')";
-        mysqli_query($conn, $sql_penjualan);
-        $id_penjualan = mysqli_insert_id($conn);
+        $audri_sql_penjualan = "INSERT INTO penjual (tanggal_penjualan, total_harga, Id_pelanggan) 
+                          VALUES ('$audri_tanggalPenjualan', '$audri_totalHarga', '$audri_Id_pelanggan')";
+        mysqli_query($conn, $audri_sql_penjualan);
+        $audri_ID_penjualan = mysqli_insert_id($conn);
 
-        foreach ($cart as $item) {
-            $subtotal = $item['harga'] * $item['jumlah'];
-            $id_produk = $item['Id_produk'];
-            $jumlah_produk = $item['jumlah'];
+        foreach ($audri_cart as $audri_item) {
+            $audri_subtotal = $audri_item['harga'] * $audri_item['jumlah'];
+            $audri_Id_produk = $audri_item['Id_produk'];
+            $audri_jumlah_produk = $audri_item['jumlah'];
 
-            $sql_detail = "INSERT INTO detail_penjualan (Id_penjualan, Id_produk, jumlah_produk, subtotal) 
-                           VALUES ('$id_penjualan', '$id_produk', '$jumlah_produk', '$subtotal')";
-            mysqli_query($conn, $sql_detail);
+            $audri_sql_detail = "INSERT INTO detail_penjualan (Id_penjualan, Id_produk, jumlah_produk, subtotal) 
+                           VALUES ('$audri_ID_penjualan', '$audri_Id_produk', '$audri_jumlah_produk', '$audri_subtotal')";
+            mysqli_query($conn, $audri_sql_detail);
 
-            $sql_update_stock = "UPDATE produk SET stok = stok - $jumlah_produk WHERE Id_produk = '$id_produk'";
-            mysqli_query($conn, $sql_update_stock);
+           $audri_sql_update_stock = "UPDATE produk SET stok = stok - $audri_jumlah_produk WHERE Id_produk = '$audri_Id_produk'";
+            mysqli_query($conn,$audri_sql_update_stock);
         }
 
-        $kembalian = $jumlah_pembayaran - $total_harga;
+        $audri_kembalian = $audri_jumlah_pembayaran - $audri_totalHarga;
         unset($_SESSION['cart']);
     }
 }
 
-$daftar_barang = isset($cart) ? $cart : [];
+$audri_daftarBarang = isset($audri_cart) ? $audri_cart : [];
 ?>
 
 <!DOCTYPE html>
@@ -131,38 +131,43 @@ $daftar_barang = isset($cart) ? $cart : [];
             visibility: visible;
         }
         .transaction-success {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-        }
+                position: absolute;
+                left: 50%;
+                top: 0;
+                transform: translateX(-50%);
+                text-align: center;
+                width: 100%;
+                margin-top: 20px; 
+            }
         .no-print {
                 display: none !important;
             }
     }
+
+  
     </style>
 </head>
 <body>
 <div class="container">
     <h2>Keranjang Belanja</h2>
     <div class="product-list">
-        <?php foreach ($cart as $item): ?>
+        <?php foreach ($audri_cart as $audri_item): ?>
             <div class="product-card">
-                <h3><?= htmlspecialchars($item['nama_produk']) ?></h3>
-                <p><strong>Harga:</strong> Rp. <?= number_format($item['harga'], 0, ',', '.') ?></p>
-                <p><strong>Jumlah:</strong> <?= $item['jumlah'] ?></p>
-                <p><strong>Total:</strong> Rp. <?= number_format($item['harga'] * $item['jumlah'], 0, ',', '.') ?></p>
+                <h3><?= htmlspecialchars($audri_item['nama_produk']) ?></h3>
+                <p><strong>Harga:</strong> Rp. <?= number_format($audri_item['harga'], 0, ',', '.') ?></p>
+                <p><strong>Jumlah:</strong> <?= $audri_item['jumlah'] ?></p>
+                <p><strong>Total:</strong> Rp. <?= number_format($audri_item['harga'] * $audri_item['jumlah'], 0, ',', '.') ?></p>
                 
                 <!-- Tombol Tambah dan Kurang -->
-                <a href="?action=kurang&id_produk=<?= $item['Id_produk'] ?>" >-</a>
-                <a href="?action=tambah&id_produk=<?= $item['Id_produk'] ?>" >+</a>
-                <a href="?hapus_item=<?= $item['Id_produk'] ?>" class="delete-button"><i class='uil uil-trash-alt'></i></a>
+                <a href="?action=kurang&Id_produk=<?= $audri_item['Id_produk'] ?>" >-</a>
+                <a href="?action=tambah&Id_produk=<?= $audri_item['Id_produk'] ?>" >+</a>
+                <a href="?hapus_item=<?= $audri_item['Id_produk'] ?>" class="delete-button"><i class='uil uil-trash-alt'></i></a>
 
             </div>
         <?php endforeach; ?>
     </div>
     <div class="grand-total">
-        <strong>Grand Total:</strong> Rp. <?= number_format($total_harga, 0, ',', '.') ?>
+        <strong>Grand Total:</strong> Rp. <?= number_format($audri_totalHarga, 0, ',', '.') ?>
     </div>
     <a href="cart.php"><button>Kembali ke Keranjang</button></a>
 </div>
@@ -173,29 +178,29 @@ $daftar_barang = isset($cart) ? $cart : [];
     <form method="POST">
         <div class="form-group">
             <label>ID Pelanggan:</label>
-            <input type="text" value="<?= htmlspecialchars($id_pelanggan) ?>" disabled>
+            <input type="text" value="<?= htmlspecialchars($audri_Id_pelanggan) ?>" disabled>
         </div>
         <div class="form-group">
             <label>Nama Pelanggan:</label>
-            <input type="text" name="nama_pelanggan" value="<?= htmlspecialchars($nama_pelanggan) ?>" required>
+            <input type="text" name="nama_pelanggan" value="<?= htmlspecialchars($audri_nama_pelanggan) ?>" required>
         </div>
         <div class="form-group">
             <label>Alamat:</label>
-            <input type="text" name="alamat" value="<?= htmlspecialchars($alamat) ?>" required>
+            <input type="text" name="alamat" value="<?= htmlspecialchars($audri_alamat) ?>" required>
         </div>
         <div class="form-group">
             <label>Nomor Telepon:</label>
-            <input type="number" name="nomor_telepon" value="<?= htmlspecialchars($nomor_telepon) ?>" required>
+            <input type="number" name="nomor_telepon" value="<?= htmlspecialchars($audri_nomor_telepon) ?>" required>
         </div>
 
         <!-- Data Pembayaran -->
         <div class="form-group">
             <label>Total Harga:</label>
-            <input type="text" value="Rp. <?= number_format($total_harga, 0, ',', '.') ?>" disabled>
+            <input type="text" value="Rp. <?= number_format($audri_totalHarga, 0, ',', '.') ?>" disabled>
         </div>
         <div class="form-group">
             <label>Jumlah Bayar:</label>
-            <input type="number" name="jumlah_pembayaran" value="<?= htmlspecialchars($jumlah_pembayaran) ?>" required>
+            <input type="number" name="jumlah_pembayaran" value="<?= htmlspecialchars($audri_jumlah_pembayaran) ?>" required>
         </div>
 
         <?php if (!empty($error_message)): ?>
@@ -209,33 +214,33 @@ $daftar_barang = isset($cart) ? $cart : [];
 </div>
 
 <!-- Transaksi Berhasil -->
-<?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($jumlah_pembayaran) && empty($error_message)): ?>
+<?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($audri_jumlah_pembayaran) && empty($error_message)): ?>
     <div class="transaction-success">
         <h2>Transaksi Berhasil</h2>
        
         <div class="info">
-            <p><strong>Nama Pelanggan:</strong><span><?= htmlspecialchars($nama_pelanggan) ?></span></p>
-            <p><strong>Tanggal Pembelian:</strong><span><?= $tanggal_penjualan ?></span></p>
+            <p><strong>Nama Pelanggan:</strong><span><?= htmlspecialchars($audri_nama_pelanggan) ?></span></p>
+            <p><strong>Tanggal Pembelian:</strong><span><?= $audri_tanggalPenjualan ?></span></p>
         </div>
 
         <hr class="divider">
         <h4>Detail Barang:</h4>
         <ul class="item-list">
-            <?php foreach ($daftar_barang as $barang): 
-                $subtotal = $barang['jumlah'] * $barang['harga'];
+            <?php foreach ($audri_daftarBarang as $audri_barang): 
+                $audri_subtotal = $audri_barang['jumlah'] * $audri_barang['harga'];
             ?>
                 <li>
-                    <span><?= htmlspecialchars($barang['nama_produk']) ?> (<?= $barang['jumlah'] ?> pcs)</span>
-                    <span>Rp. <?= number_format($subtotal, 0, ',', '.') ?></span> 
+                    <span><?= htmlspecialchars($audri_barang['nama_produk']) ?> (<?= $audri_barang['jumlah'] ?> pcs)</span>
+                    <span>Rp. <?= number_format($audri_subtotal, 0, ',', '.') ?></span> 
                 </li>
             <?php endforeach; ?>
         </ul>
 
         <hr class="divider">
         <div class="info">
-            <p><strong>Total Harga:</strong><span>Rp. <?= number_format($total_harga, 0, ',', '.') ?></span></p>
-            <p><strong>Jumlah Bayar:</strong><span>Rp. <?= number_format($jumlah_pembayaran, 0, ',', '.') ?></span></p>
-            <p><strong>Kembalian:</strong><span>Rp. <?= number_format($kembalian, 0, ',', '.') ?></span></p>
+            <p><strong>Total Harga:</strong><span>Rp. <?= number_format($audri_totalHarga, 0, ',', '.') ?></span></p>
+            <p><strong>Jumlah Bayar:</strong><span>Rp. <?= number_format($audri_jumlah_pembayaran, 0, ',', '.') ?></span></p>
+            <p><strong>Kembalian:</strong><span>Rp. <?= number_format($audri_kembalian, 0, ',', '.') ?></span></p>
         </div>
         <hr class="divider">
         <div class="action-buttons no-print">

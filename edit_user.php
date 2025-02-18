@@ -2,16 +2,16 @@
 include 'config.php';
 
 if (isset($_GET['id'])) {
-    $Id_user = $_GET['id'];
+    $audri_Id_user = $_GET['id'];
 
-    $sql = "SELECT user.*, role.nama_role 
+    $audri_sql = "SELECT user.*, role.nama_role 
             FROM user 
             JOIN role ON user.Id_role = role.Id_role 
-            WHERE user.Id_user = $Id_user";
-    $result = $conn->query($sql);
+            WHERE user.Id_user = $audri_Id_user";
+    $audri_result = $conn->query($audri_sql);
 
-    if ($result && $result->num_rows > 0) {
-        $user = $result->fetch_assoc(); 
+    if ($audri_result && $audri_result->num_rows > 0) {
+        $audri_user = $audri_result->fetch_assoc(); 
     } else {
         echo "<script>alert('User tidak ditemukan!'); window.location='master_user.php';</script>";
         exit;
@@ -19,17 +19,17 @@ if (isset($_GET['id'])) {
 }
 
 if (isset($_POST['submit'])) {
-    $Id_user = $_POST['Id_user'];
-    $Id_role = $_POST['Id_role'];
-    $username = $_POST['username'];
-    $password = $_POST['password']; 
-    $TTL = $_POST['TTL'];
-    $jenis_kelamin = $_POST['jenis_kelamin'];
-    $alamat = $_POST['alamat'];
-    $no_tlp = $_POST['no_tlp'];
+    $audri_Id_user = $_POST['Id_user'];
+    $audri_Id_role = $_POST['Id_role'];
+    $audri_username = $_POST['username'];
+    $audri_password = $_POST['password']; 
+    $audri_TTL = $_POST['TTL'];
+    $audri_jenis_kelamin = $_POST['jenis_kelamin'];
+    $audri_alamat = $_POST['alamat'];
+    $audri_no_tlp = $_POST['no_tlp'];
 
 
-    $foto = $user['foto']; 
+    $audri_foto = $audri_user['foto']; 
     
     if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
         $targetDir = "uploads/users/";
@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
 
         if (in_array($fileType, ['jpg', 'jpeg', 'png', 'gif'])) {
             if (move_uploaded_file($_FILES['foto']['tmp_name'], $targetFile)) {
-                $foto = $fileName; 
+                $audri_foto = $fileName; 
             } else {
                 echo "Sorry, there was an error uploading your file.";
             }
@@ -48,34 +48,34 @@ if (isset($_POST['submit'])) {
         }
     }
 
-    if (!empty($password)) {
-        $hashedPassword = md5($password); 
-        $sql = "UPDATE user 
-                SET username = '$username', 
+    if (!empty($audri_password)) {
+        $hashedPassword = md5($audri_password); 
+        $audri_sql = "UPDATE user 
+                SET username = '$audri_username', 
                     password = '$hashedPassword', 
-                    Id_role = '$Id_role', 
-                    TTL = '$TTL', 
-                    jenis_kelamin = '$jenis_kelamin', 
-                    alamat = '$alamat', 
-                    no_tlp = '$no_tlp',
-                    foto = '$foto'
-                WHERE Id_user = $Id_user";
+                    Id_role = '$audri_Id_role', 
+                    TTL = '$audri_TTL', 
+                    jenis_kelamin = '$audri_jenis_kelamin', 
+                    alamat = '$audri_alamat', 
+                    no_tlp = '$audri_no_tlp',
+                    foto = '$audri_foto'
+                WHERE Id_user = $audri_Id_user";
     } else {
-        $sql = "UPDATE user 
-                SET username = '$username', 
-                    Id_role = '$Id_role', 
-                    TTL = '$TTL', 
-                    jenis_kelamin = '$jenis_kelamin', 
-                    alamat = '$alamat', 
-                    no_tlp = '$no_tlp',
-                    foto = '$foto'
-                WHERE Id_user = $Id_user";
+        $audri_sql = "UPDATE user 
+                SET username = '$audri_username', 
+                    Id_role = '$audri_Id_role', 
+                    TTL = '$audri_TTL', 
+                    jenis_kelamin = '$audri_jenis_kelamin', 
+                    alamat = '$audri_alamat', 
+                    no_tlp = '$audri_no_tlp',
+                    foto = '$audri_foto'
+                WHERE Id_user = $audri_Id_user";
     }
 
-    if ($conn->query($sql) === TRUE) {
+    if ($conn->query($audri_sql) === TRUE) {
         echo "<script>alert('User berhasil diperbarui!'); window.location='master_user.php';</script>";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $audri_sql . "<br>" . $conn->error;
     }
 }
 ?>
@@ -93,11 +93,11 @@ if (isset($_POST['submit'])) {
         <h2>Edit User</h2>
         <form method="POST" action="" enctype="multipart/form-data"> 
 
-            <input type="hidden" name="Id_user" value="<?php echo $user['Id_user']; ?>">
+            <input type="hidden" name="Id_user" value="<?php echo $audri_user['Id_user']; ?>">
 
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" value="<?php echo $user['username']; ?>" required>
+            <input type="text" id="username" name="username" value="<?php echo $audri_user['username']; ?>" required>
         </div>
 
         <div class="form-group">
@@ -110,12 +110,12 @@ if (isset($_POST['submit'])) {
             <select class="form-control" id="Id_role" name="Id_role" required>
                 <option value="">-- Pilih Role --</option>
                 <?php
-                $queryRole = "SELECT Id_role, nama_role FROM role";
-                $roles = $conn->query($queryRole);
+                $audri_queryRole = "SELECT Id_role, nama_role FROM role";
+                $audri_roles = $conn->query($audri_queryRole);
 
-                while ($role = $roles->fetch_assoc()) {
-                    $selected = ($role['Id_role'] == $user['Id_role']) ? 'selected' : '';
-                    echo "<option value='" . $role['Id_role'] . "' $selected>" . $role['nama_role'] . "</option>";
+                while ($audri_role = $audri_roles->fetch_assoc()) {
+                    $audri_selected = ($audri_role['Id_role'] == $audri_user['Id_role']) ? 'selected' : '';
+                    echo "<option value='" . $audri_role['Id_role'] . "' $audri_selected>" . $audri_role['nama_role'] . "</option>";
                 }
                 ?>
             </select>
@@ -123,34 +123,34 @@ if (isset($_POST['submit'])) {
 
         <div class="form-group">
             <label for="TTL">Tempat Tanggal Lahir</label>
-            <input type="date" id="TTL" name="TTL" value="<?php echo $user['TTL']; ?>">
+            <input type="date" id="TTL" name="TTL" value="<?php echo $audri_user['TTL']; ?>">
         </div>
             
         <div class="form-group">
             <label for="jenis_kelamin">Jenis Kelamin</label>
             <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required>
                 <option value="">-- Pilih Jenis Kelamin --</option>
-                <option value="Laki-laki" <?php echo (isset($user['jenis_kelamin']) && $user['jenis_kelamin'] == 'Laki-laki') ? 'selected' : ''; ?>>Laki-laki</option>
-                <option value="Perempuan" <?php echo (isset($user['jenis_kelamin']) && $user['jenis_kelamin'] == 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
+                <option value="Laki-laki" <?php echo (isset($audri_user['jenis_kelamin']) && $audri_user['jenis_kelamin'] == 'Laki-laki') ? 'selected' : ''; ?>>Laki-laki</option>
+                <option value="Perempuan" <?php echo (isset($audri_user['jenis_kelamin']) && $audri_user['jenis_kelamin'] == 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
             </select> 
         </div>
            
         <div class="form-group">
             <label for="alamat">Alamat</label>
-            <input type="text" id="alamat" name="alamat" value="<?php echo $user['alamat']; ?>" required>
+            <input type="text" id="alamat" name="alamat" value="<?php echo $audri_user['alamat']; ?>" required>
         </div>
 
         <div class="form-group">
             <label for="no_tlp">No Telepon</label>
-            <input type="number" id="no_tlp" name="no_tlp" value="<?php echo $user['no_tlp']; ?>" required>
+            <input type="number" id="no_tlp" name="no_tlp" value="<?php echo $audri_user['no_tlp']; ?>" required>
         </div>
 
         <div class="form-group">
             <label for="foto">Foto User</label>
             <input type="file" id="foto" name="foto">
             <br>
-            <?php if (!empty($user['foto'])): ?>
-                <img src="uploads/users/<?php echo $user['foto']; ?>" alt="Foto User" width="100" height="100">
+            <?php if (!empty($audri_user['foto'])): ?>
+                <img src="uploads/users/<?php echo $audri_user['foto']; ?>" alt="Foto User" width="100" height="100">
             <?php endif; ?>
         </div>
 

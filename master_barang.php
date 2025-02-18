@@ -6,14 +6,12 @@ include 'sidebar.php';
 
 session_regenerate_Id(true);
 
-$username = $_SESSION['username'];
-$role = $_SESSION['role'];
+$audri_username = $_SESSION['username'];
+$audri_role = $_SESSION['role'];
 
-$searchKeyword = $_GET['search'] ?? '';
+$audri_searchKeyword = $_GET['search'] ?? '';
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,20 +40,20 @@ $searchKeyword = $_GET['search'] ?? '';
         </h2>
 
         <?php
-            $queryUser = "SELECT foto FROM user WHERE username = '$username'";
-            $resultUser = mysqli_query($conn, $queryUser);
-            $userData = mysqli_fetch_assoc($resultUser);
+            $audri_queryUser = "SELECT foto FROM user WHERE username = '$audri_username'";
+            $audri_resultUser = mysqli_query($conn, $audri_queryUser);
+            $audri_userData = mysqli_fetch_assoc($audri_resultUser);
 
-            if (!$userData) {
+            if (!$audri_userData) {
                 die("User data not found.");
             }
-            $fotoUser = !empty($userData['foto']) ? 'uploads/users/' . $userData['foto'] : 'img/default.jpg'; ?>       
+            $audri_fotoUser = !empty($audri_userData['foto']) ? 'uploads/users/' . $audri_userData['foto'] : 'img/default.jpg'; ?>       
 
             <div class="user-wrapper">
-            <img src="<?php echo htmlspecialchars($fotoUser); ?>" width="40px" height="30px" alt="User">
+            <img src="<?php echo htmlspecialchars($audri_fotoUser); ?>" width="40px" height="30px" alt="User">
                 <div>
-                    <h4><?php echo htmlspecialchars($username); ?></h4>
-                    <small><?php echo htmlspecialchars($role); ?></small>
+                    <h4><?php echo htmlspecialchars($audri_username); ?></h4>
+                    <small><?php echo htmlspecialchars($audri_role); ?></small>
                 </div>
             </div>
         </header>
@@ -67,7 +65,7 @@ $searchKeyword = $_GET['search'] ?? '';
         <div class="container">
             <div class="header-tools">
                 <form method="GET" action="master_barang.php" class="search-box">
-                    <input type="text" name="search" placeholder="Search produk..." class="search-input" value="<?php echo htmlspecialchars($searchKeyword); ?>">
+                    <input type="text" name="search" placeholder="Search produk..." class="search-input" value="<?php echo htmlspecialchars($audri_searchKeyword); ?>">
                     <button type="submit" class="search-btn"><i class="uil.search"></i> <img src="asset/search.svg" width="20px" height="20px"></button> 
                 </form>
 
@@ -89,58 +87,58 @@ $searchKeyword = $_GET['search'] ?? '';
                 </thead>
             
                     <?php
-                     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-                     $limit = 5; 
-                     $offset = ($page - 1) * $limit; 
+                     $audri_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                     $audri_limit = 5; 
+                     $audri_offset = ($audri_page - 1) * $audri_limit; 
 
-                    $sql = "SELECT * FROM produk";
+                    $audri_sql = "SELECT * FROM produk";
 
-                    if (!empty($searchKeyword)) {
-                        $sql .= " WHERE Id_produk LIKE '%$searchKeyword%'
-                                  OR nama_produk LIKE '%$searchKeyword%'  
-                                  OR harga LIKE '%$searchKeyword%' 
-                                  OR stok LIKE '%$searchKeyword%'";
+                    if (!empty($audri_searchKeyword)) {
+                        $audri_sql .= " WHERE Id_produk LIKE '%$audri_searchKeyword%'
+                                  OR nama_produk LIKE '%$audri_searchKeyword%'  
+                                  OR harga LIKE '%$audri_searchKeyword%' 
+                                  OR stok LIKE '%$audri_searchKeyword%'";
                     }
 
-                    $sql .= " LIMIT $limit OFFSET $offset"; 
-                    $result = $conn->query($sql);
+                    $audri_sql .= " LIMIT $audri_limit OFFSET $audri_offset"; 
+                    $audri_result = $conn->query($audri_sql);
 
-                    $totalDataQuery = "SELECT COUNT(*) as total FROM produk";
+                    $audri_totalDataQuery = "SELECT COUNT(*) as total FROM produk";
 
-                    if (!empty($searchKeyword)) {
-                    $totalDataQuery .= " WHERE Id_produk LIKE '%$searchKeyword%'
-                                  OR nama_produk LIKE '%$searchKeyword%'  
-                                  OR harga LIKE '%$searchKeyword%' 
-                                  OR stok LIKE '%$searchKeyword%'";
+                    if (!empty($audri_searchKeyword)) {
+                    $audri_totalDataQuery .= " WHERE Id_produk LIKE '%$audri_searchKeyword%'
+                                  OR nama_produk LIKE '%$audri_searchKeyword%'  
+                                  OR harga LIKE '%$audri_searchKeyword%' 
+                                  OR stok LIKE '%$audri_searchKeyword%'";
                     }
 
-                    $totalDataResult = $conn->query($totalDataQuery);
-                    $totalData = $totalDataResult->fetch_assoc()['total'];
-                    $totalPages = ceil($totalData / $limit); 
+                    $audri_totalDataResult = $conn->query($audri_totalDataQuery);
+                    $audri_totalData = $audri_totalDataResult->fetch_assoc()['total'];
+                    $audri_totalPages = ceil($audri_totalData / $audri_limit); 
                     ?>
 
                     <tbody>
                     <?php
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            $fotoPath = !empty($row['foto_produk']) ? 'uploads/produks/' . $row['foto_produk'] : 'img/default.jpg';
+                    if ($audri_result->num_rows > 0) {
+                        while ($audri_row = $audri_result->fetch_assoc()) {
+                            $audri_fotoPath = !empty($audri_row['foto_produk']) ? 'uploads/produks/' . $audri_row['foto_produk'] : 'img/default.jpg';
                            
                             echo "<tr>
-                                    <td>" . $row['Id_produk'] . "</td>
-                                    <td>" . $row['nama_produk'] . "</td>
-                                    <td>" . $row['harga'] . "</td>
-                                    <td>" . $row['stok'] . "</td>
+                                    <td>" . $audri_row['Id_produk'] . "</td>
+                                    <td>" . $audri_row['nama_produk'] . "</td>
+                                    <td>" . $audri_row['harga'] . "</td>
+                                    <td>" . $audri_row['stok'] . "</td>
                                     <td>";
-                                    if ($fotoPath && file_exists($fotoPath)) {
-                                        echo "<img src='" . htmlspecialchars($fotoPath) . "' width='50' height='50' alt='Foto Produk'>";
+                                    if ($audri_fotoPath && file_exists($audri_fotoPath)) {
+                                        echo "<img src='" . htmlspecialchars($audri_fotoPath) . "' width='50' height='50' alt='Foto Produk'>";
                                     } else {
                                         echo "<p>No photo available</p>";
                                     }
                             
                              echo "</td>
                                     <td>
-                                        <a href='edit_barang.php?id=" . $row['Id_produk'] . "' class='btn btn-edit'> <img src='asset/edit.svg' width='25px' height='25px'> </a>
-                                        <a href='proses_barang.php?id=" . $row['Id_produk'] . "' class='btn btn-delete'> <img src='asset/trash-alt.svg' width='25px' height='25px'> </a>
+                                        <a href='edit_barang.php?id=" . $audri_row['Id_produk'] . "' class='btn btn-edit'> <img src='asset/edit.svg' width='25px' height='25px'> </a>
+                                        <a href='proses_barang.php?id=" . $audri_row['Id_produk'] . "' class='btn btn-delete'> <img src='asset/trash-alt.svg' width='25px' height='25px'> </a>
                                     </td>
                                 </tr>";
                         }
@@ -152,18 +150,18 @@ $searchKeyword = $_GET['search'] ?? '';
             </table>
 
             <div class="pagination">
-                <?php if ($page > 1): ?>
-                    <a href="?page=<?php echo $page - 1; ?>&search=<?php echo htmlspecialchars($searchKeyword); ?>" class="page-link">Previous</a>
+                <?php if ($audri_page > 1): ?>
+                    <a href="?page=<?php echo $audri_page - 1; ?>&search=<?php echo htmlspecialchars($audri_searchKeyword); ?>" class="page-link">Previous</a>
                 <?php endif; ?>
 
-                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                    <a href="?page=<?php echo $i; ?>&search=<?php echo htmlspecialchars($searchKeyword); ?>" class="page-link <?php echo ($page == $i) ? 'active' : ''; ?>">
+                <?php for ($i = 1; $i <= $audri_totalPages; $i++): ?>
+                    <a href="?page=<?php echo $i; ?>&search=<?php echo htmlspecialchars($audri_searchKeyword); ?>" class="page-link <?php echo ($audri_page == $i) ? 'active' : ''; ?>">
                         <?php echo $i; ?>
                     </a>
                 <?php endfor; ?>
 
-                <?php if ($page < $totalPages): ?>
-                    <a href="?page=<?php echo $page + 1; ?>&search=<?php echo htmlspecialchars($searchKeyword); ?>" class="page-link">Next</a>
+                <?php if ($audri_page < $audri_totalPages): ?>
+                    <a href="?page=<?php echo $audri_page + 1; ?>&search=<?php echo htmlspecialchars($audri_searchKeyword); ?>" class="page-link">Next</a>
                 <?php endif; ?>
             </div>
         </div>

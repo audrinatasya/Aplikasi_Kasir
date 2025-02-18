@@ -12,19 +12,19 @@
 include 'config.php';
 
 if (isset($_POST['submit'])) {
-    $nama_produk = $_POST['nama_produk'];
-    $harga = $_POST['harga'];
-    $stok = $_POST['stok'];
+    $audri_namaProduk = $_POST['nama_produk'];
+    $audri_harga = $_POST['harga'];
+    $audri_stok = $_POST['stok'];
 
     if (!empty($_FILES['foto_produk']['name'])) {
         $namaFile = 'foto_produk_' . time() . '.' . pathinfo($_FILES['foto_produk']['name'], PATHINFO_EXTENSION);
         $pathSimpan = 'uploads/produks/' . $namaFile;
 
         if (move_uploaded_file($_FILES['foto_produk']['tmp_name'], $pathSimpan)) {
-            $query = "INSERT INTO produk (nama_produk, harga, stok, foto_produk) 
-                      VALUES ('$nama_produk', '$harga', '$stok', '$namaFile')";
+            $audri_query = "INSERT INTO produk (nama_produk, harga, stok, foto_produk) 
+                      VALUES ('$audri_namaProduk', '$audri_harga', '$audri_stok', '$namaFile')";
 
-            if (mysqli_query($conn, $query)) {
+            if (mysqli_query($conn, $audri_query)) {
                 echo "<script>alert('Barang berhasil ditambahkan!'); window.location='master_barang.php';</script>";
             } else {
                 echo "<script>alert('Gagal menyimpan data ke database!');</script>";

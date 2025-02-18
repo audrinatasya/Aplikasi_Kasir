@@ -11,8 +11,8 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-$username = $_SESSION['username'];
-$role = $_SESSION['role'];
+$audri_username = $_SESSION['username'];
+$audri_role = $_SESSION['role'];
 ?>
 
 <!DOCTYPE html>
@@ -34,21 +34,21 @@ $role = $_SESSION['role'];
     </h2>
 
     <?php
-        $queryUser = "SELECT foto FROM user WHERE username = '$username'";
-        $resultUser = mysqli_query($conn, $queryUser);
-        $userData = mysqli_fetch_assoc($resultUser);
+        $audri_queryUser = "SELECT foto FROM user WHERE username = '$audri_username'";
+        $audri_resultUser = mysqli_query($conn, $audri_queryUser);
+        $audri_userData = mysqli_fetch_assoc($audri_resultUser);
 
-        if (!$userData) {
+        if (!$audri_userData) {
             die("User data not found.");
         }
-        $fotoUser = !empty($userData['foto']) ? 'uploads/users/' . $userData['foto'] : 'img/default.jpg';
+        $audri_fotoUser = !empty($audri_userData['foto']) ? 'uploads/users/' . $audri_userData['foto'] : 'img/default.jpg';
     ?>
 
     <div class="user-wrapper">
-        <img src="<?php echo htmlspecialchars($fotoUser); ?>" width="40px" height="30px" alt="User">
+        <img src="<?php echo htmlspecialchars($audri_fotoUser); ?>" width="40px" height="30px" alt="User">
         <div>
-            <h4><?php echo htmlspecialchars($username); ?></h4>
-            <small><?php echo htmlspecialchars($role); ?></small>
+            <h4><?php echo htmlspecialchars($audri_username); ?></h4>
+            <small><?php echo htmlspecialchars($audri_role); ?></small>
         </div>
     </div>
 </header>

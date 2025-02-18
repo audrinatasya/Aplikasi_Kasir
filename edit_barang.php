@@ -2,13 +2,13 @@
 include 'config.php';
 
 if (isset($_GET['id'])) {
-    $Id_produk = $_GET['id']; 
+    $audri_Id_produk = $_GET['id']; 
 
-    $sql = "SELECT * FROM produk WHERE Id_produk = $Id_produk";
-    $result = $conn->query($sql);
+    $audri_sql = "SELECT * FROM produk WHERE Id_produk = $audri_Id_produk";
+    $audri_result = $conn->query($audri_sql);
 
-    if ($result && $result->num_rows > 0) {
-        $produk = $result->fetch_assoc(); 
+    if ($audri_result && $audri_result->num_rows > 0) {
+        $audri_produk = $audri_result->fetch_assoc(); 
     } else {
         echo "<script>alert('Produk tidak ditemukan!'); window.location='master_barang.php';</script>";
         exit;
@@ -16,12 +16,12 @@ if (isset($_GET['id'])) {
 }
 
 if (isset($_POST['submit'])) {
-    $Id_produk = $_POST['Id_produk'];
-    $nama_produk = $_POST['nama_produk'];
-    $harga = $_POST['harga']; 
-    $stok = $_POST['stok'];
+    $audri_Id_produk = $_POST['Id_produk'];
+    $audri_nama_produk = $_POST['nama_produk'];
+    $audri_harga = $_POST['harga']; 
+    $audri_stok = $_POST['stok'];
 
-    $foto = $produk['foto_produk']; 
+    $audri_foto = $audri_produk['foto_produk']; 
     
     if (isset($_FILES['foto_produk']) && $_FILES['foto_produk']['error'] == 0) {
         $targetDir = "uploads/produks/";
@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
 
         if (in_array($fileType, ['jpg', 'jpeg', 'png', 'gif'])) {
             if (move_uploaded_file($_FILES['foto_produk']['tmp_name'], $targetFile)) {
-                $foto = $fileName; 
+                $audri_foto = $fileName; 
             } else {
                 echo "Sorry, there was an error uploading your file.";
             }
@@ -40,17 +40,17 @@ if (isset($_POST['submit'])) {
         }
     }
  
-    $sql = "UPDATE produk 
-            SET nama_produk = '$nama_produk', 
-                harga = '$harga', 
-                stok = '$stok', 
-                foto_produk = '$foto'
-            WHERE Id_produk = $Id_produk";
+    $audri_sql = "UPDATE produk 
+            SET nama_produk = '$audri_nama_produk', 
+                harga = '$audri_harga', 
+                stok = '$audri_stok', 
+                foto_produk = '$audri_foto'
+            WHERE Id_produk = $audri_Id_produk";
 
-    if ($conn->query($sql) === TRUE) {
+    if ($conn->query($audri_sql) === TRUE) {
         echo "<script>alert('Barang berhasil diperbarui!'); window.location='master_barang.php';</script>";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $audri_sql . "<br>" . $conn->error;
     }
 }
 ?>
@@ -68,29 +68,29 @@ if (isset($_POST['submit'])) {
         <h2>Edit Barang</h2>
         <form method="POST" action="" enctype="multipart/form-data">
 
-            <input type="hidden" name="Id_produk" value="<?php echo $produk['Id_produk']; ?>">
+            <input type="hidden" name="Id_produk" value="<?php echo $audri_produk['Id_produk']; ?>">
 
             <div class="form-group">
                 <label for="nama_produk">Nama Produk</label>
-                <input type="text" id="nama_produk" name="nama_produk" value="<?php echo $produk['nama_produk']; ?>" required>
+                <input type="text" id="nama_produk" name="nama_produk" value="<?php echo $audri_produk['nama_produk']; ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="harga">Harga</label>
-                <input type="number" id="harga" name="harga" value="<?php echo $produk['harga']; ?>">
+                <input type="number" id="harga" name="harga" value="<?php echo $audri_produk['harga']; ?>">
             </div>
 
             <div class="form-group">
                 <label for="stok">Stok</label>
-                <input type="number" id="stok" name="stok" value="<?php echo $produk['stok']; ?>" required>
+                <input type="number" id="stok" name="stok" value="<?php echo $audri_produk['stok']; ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="foto_produk">Foto Produk</label>
                 <input type="file" id="foto_produk" name="foto_produk">
                 <br>
-                <?php if (!empty($produk['foto_produk'])): ?>
-                    <img src="uploads/produks/<?php echo $produk['foto_produk']; ?>" alt="Foto Produk" width="100" height="100">
+                <?php if (!empty($audri_produk['foto_produk'])): ?>
+                    <img src="uploads/produks/<?php echo $audri_produk['foto_produk']; ?>" alt="Foto Produk" width="100" height="100">
                 <?php endif; ?>
             </div>
 

@@ -12,23 +12,23 @@
 include 'config.php';
 
 if (isset($_POST['submit'])) {
-    $username = $_POST['username'];
-    $password = md5($_POST['password']); 
-    $Id_role = $_POST['Id_role'];
-    $TTL = $_POST['TTL'];
-    $jenis_kelamin = $_POST['jenis_kelamin'];
-    $alamat = $_POST['alamat'];
-    $no_tlp = $_POST['no_tlp'];
+    $audri_username = $_POST['username'];
+    $audri_password = md5($_POST['password']); 
+    $audri_Id_role = $_POST['Id_role'];
+    $audri_TTL = $_POST['TTL'];
+    $audri_jenis_kelamin = $_POST['jenis_kelamin'];
+    $audri_alamat = $_POST['alamat'];
+    $audri_no_tlp = $_POST['no_tlp'];
 
     if (!empty($_FILES['foto']['name'])) {
-        $namaFile = 'foto_' . time() . '.' . pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
-        $pathSimpan = 'uploads/users/' . $namaFile;
+        $audri_namaFile = 'foto_' . time() . '.' . pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
+        $audri_pathSimpan = 'uploads/users/' . $audri_namaFile;
 
-        if (move_uploaded_file($_FILES['foto']['tmp_name'], $pathSimpan)) {
-            $query = "INSERT INTO user (username, password, Id_role, TTL, jenis_kelamin, alamat, no_tlp, foto) 
-                      VALUES ('$username', '$password', '$Id_role', '$TTL', '$jenis_kelamin', '$alamat', '$no_tlp', '$namaFile')";
+        if (move_uploaded_file($_FILES['foto']['tmp_name'], $audri_pathSimpan)) {
+            $audriQuery = "INSERT INTO user (username, password, Id_role, TTL, jenis_kelamin, alamat, no_tlp, foto) 
+                      VALUES ('$audri_username', '$audri_password', '$audri_Id_role', '$audri_TTL', '$audri_jenis_kelamin', '$audri_alamat', '$audri_no_tlp', '$audri_namaFile')";
 
-            if (mysqli_query($conn, $query)) {
+            if (mysqli_query($conn, $audriQuery)) {
                 echo "<script>alert('User berhasil ditambahkan!'); window.location='master_user.php';</script>";
             } else {
                 echo "<script>alert('Gagal menyimpan data ke database!');</script>";
@@ -58,9 +58,9 @@ if (isset($_POST['submit'])) {
             <select id="Id_role" name="Id_role" required>
                 <option value="">-- Pilih Role --</option>
                 <?php
-                $roles = mysqli_query($conn, "SELECT Id_role, nama_role FROM role");
-                while ($role = mysqli_fetch_assoc($roles)) {
-                    echo "<option value='{$role['Id_role']}'>{$role['nama_role']}</option>";
+                $audri_roles = mysqli_query($conn, "SELECT Id_role, nama_role FROM role");
+                while ($audri_role = mysqli_fetch_assoc($audri_roles)) {
+                    echo "<option value='{$audri_role['Id_role']}'>{$audri_role['nama_role']}</option>";
                 }
                 ?>
             </select>

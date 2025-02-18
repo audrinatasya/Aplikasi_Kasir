@@ -5,11 +5,11 @@ include 'sidebar.php';
 
 session_regenerate_id(true);
 
-$username = $_SESSION['username'];
-$role = $_SESSION['role'];
+$audri_username = $_SESSION['username'];
+$audri_role = $_SESSION['role'];
 
 // Tangkap keyword pencarian jika ada
-$searchKeyword = $_GET['search'] ?? '';
+$audri_searchKeyword = $_GET['search'] ?? '';
 
 ?>
 
@@ -38,41 +38,41 @@ $searchKeyword = $_GET['search'] ?? '';
 
     <!-- FORM SEARCH -->
     <form method="GET" action="cart.php" class="search-wrapper">
-        <input type="text" name="search" placeholder="Cari produk..." value="<?php echo htmlspecialchars($searchKeyword); ?>" class="search-input">
+        <input type="text" name="search" placeholder="Cari produk..." value="<?php echo htmlspecialchars($audri_searchKeyword); ?>" class="search-input">
         <button type="submit" class="search-btn"><i class="uil.search"></i> <img src="asset/search.svg" width="25px" height="25px"  margin-right: 20px;></button> 
     </form>
 
     <?php
-    $queryUser = "SELECT foto FROM user WHERE username = '$username'";
-    $resultUser = mysqli_query($conn, $queryUser);
-    $userData = mysqli_fetch_assoc($resultUser);
+    $audri_queryUser = "SELECT foto FROM user WHERE username = '$audri_username'";
+    $audri_resultUser = mysqli_query($conn, $audri_queryUser);
+    $audri_userData = mysqli_fetch_assoc($audri_resultUser);
 
-    if (!$userData) {
+    if (!$audri_userData) {
         die("User data not found.");
     }
-    $fotoUser = !empty($userData['foto']) ? 'uploads/users/' . $userData['foto'] : 'img/default.jpg'; 
+    $audri_fotoUser = !empty($audri_userData['foto']) ? 'uploads/users/' . $audri_userData['foto'] : 'img/default.jpg'; 
     ?>       
 
     <div class="user-wrapper">
-        <img src="<?php echo htmlspecialchars($fotoUser); ?>" width="40px" height="30px" alt="User">
+        <img src="<?php echo htmlspecialchars($audri_fotoUser); ?>" width="40px" height="30px" alt="User">
         <div>
-            <h4><?php echo htmlspecialchars($username); ?></h4>
-            <small><?php echo htmlspecialchars($role); ?></small>
+            <h4><?php echo htmlspecialchars($audri_username); ?></h4>
+            <small><?php echo htmlspecialchars($audri_role); ?></small>
         </div>
     </div>
 </header>
 
 <?php
 // Query produk
-$query = "SELECT Id_produk, nama_produk, harga, stok, foto_produk FROM produk";
+$audri_query = "SELECT Id_produk, nama_produk, harga, stok, foto_produk FROM produk";
 
 // Jika ada keyword search, tambahkan filter
-if (!empty($searchKeyword)) {
-    $query .= " WHERE nama_produk LIKE '%$searchKeyword%'";
+if (!empty($audri_searchKeyword)) {
+    $audri_query .= " WHERE nama_produk LIKE '%$audri_searchKeyword%'";
 }
 
-$result = mysqli_query($conn, $query);
-if (!$result) {
+$audri_result = mysqli_query($conn, $audri_query);
+if (!$audri_result) {
     die("Query failed: " . mysqli_error($conn));
 }
 ?>
@@ -80,17 +80,17 @@ if (!$result) {
 <div class="main-content">
     <main>
         <div class="card-container">
-            <?php if (mysqli_num_rows($result) > 0): ?>
-                <?php while ($product = mysqli_fetch_assoc($result)): ?>
-                    <div class="card" data-id="<?php echo $product['Id_produk']; ?>" data-name="<?php echo $product['nama_produk']; ?>" data-price="<?php echo $product['harga']; ?>" data-stock="<?php echo $product['stok']; ?>">
-                        <img src="uploads/produks/<?php echo $product['foto_produk']; ?>" class="card-img-top" alt="<?php echo $product['nama_produk']; ?>">
+            <?php if (mysqli_num_rows($audri_result) > 0): ?>
+                <?php while ($audri_product = mysqli_fetch_assoc($audri_result)): ?>
+                    <div class="card" data-id="<?php echo $audri_product['Id_produk']; ?>" data-name="<?php echo $audri_product['nama_produk']; ?>" data-price="<?php echo $audri_product['harga']; ?>" data-stock="<?php echo $audri_product['stok']; ?>">
+                        <img src="uploads/produks/<?php echo $audri_product['foto_produk']; ?>" class="card-img-top" alt="<?php echo $audri_product['nama_produk']; ?>">
                         <div class="card-body">
-                            <h5 class="card-title"><?php echo $product['nama_produk']; ?></h5>
-                            <p class="card-text">Harga: Rp. <?php echo number_format($product['harga'], 0, ',', '.'); ?> | Stok: <?php echo $product['stok']; ?></p>
+                            <h5 class="card-title"><?php echo $audri_product['nama_produk']; ?></h5>
+                            <p class="card-text">Harga: Rp. <?php echo number_format($audri_product['harga'], 0, ',', '.'); ?> | Stok: <?php echo $audri_product['stok']; ?></p>
                             
-                            <input type="number" id="quantity-<?php echo $product['Id_produk']; ?>" min="1" value="1" style="width: 40px; margin-bottom: 10px; margin-left: 10px;">
+                            <input type="number" id="quantity-<?php echo $audri_product['Id_produk']; ?>" min="1" value="1" style="width: 40px; margin-bottom: 10px; margin-left: 10px;">
                             
-                            <button class="btn-primary" onclick="addToCart(<?php echo $product['Id_produk']; ?>)">Tambah ke Keranjang</button>
+                            <button class="btn-primary" onclick="addToCart(<?php echo $audri_product['Id_produk']; ?>)">Tambah ke Keranjang</button>
                         </div>
                     </div>
                 <?php endwhile; ?>

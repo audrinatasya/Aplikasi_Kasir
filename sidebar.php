@@ -10,9 +10,9 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-$role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
+$audri_role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
 
-if (!$role) {
+if (!$audri_role) {
     header("Location: logout.php");
     exit();
 }
@@ -48,7 +48,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <span>Dashboard</span>
                 </a>
             </li>
-            <?php if ($role === 'Administrator'): ?>
+            <?php if ($audri_role === 'Administrator'): ?>
                 <li>
                     <a href="master_user.php" class="<?= ($current_page == 'master_user.php') ? 'active' : '' ?>">
                         <span class="las la-users"> </span>
