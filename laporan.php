@@ -47,7 +47,6 @@ function getRekap($audri_periode, $audri_tanggal = null, $audri_bulan = null, $a
     $audri_result = mysqli_query($conn, $audri_query);
     $audri_data = mysqli_fetch_all($audri_result, MYSQLI_ASSOC);
 
-    // Query untuk menghitung total penjualan
     $audri_totalPenjualanQuery = "SELECT SUM(p.total_harga) AS total_penjualan
                             FROM penjual p
                             WHERE $audri_where";

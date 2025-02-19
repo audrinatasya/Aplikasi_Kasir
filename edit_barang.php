@@ -39,18 +39,26 @@ if (isset($_POST['submit'])) {
             echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
         }
     }
- 
-    $audri_sql = "UPDATE produk 
-            SET nama_produk = '$audri_nama_produk', 
-                harga = '$audri_harga', 
-                stok = '$audri_stok', 
-                foto_produk = '$audri_foto'
-            WHERE Id_produk = $audri_Id_produk";
 
-    if ($conn->query($audri_sql) === TRUE) {
-        echo "<script>alert('Barang berhasil diperbarui!'); window.location='master_barang.php';</script>";
+    // Ambil stok saat ini dari database
+    $current_stok = $audri_produk['stok'];
+
+    // Cek apakah stok yang diinputkan lebih besar dari stok saat ini
+    if ($audri_stok > $current_stok) {
+        $audri_sql = "UPDATE produk 
+                SET nama_produk = '$audri_nama_produk', 
+                    harga = '$audri_harga', 
+                    stok = '$audri_stok', 
+                    foto_produk = '$audri_foto'
+                WHERE Id_produk = $audri_Id_produk";
+
+        if ($conn->query($audri_sql) === TRUE) {
+            echo "<script>alert('Barang berhasil diperbarui!'); window.location='master_barang.php';</script>";
+        } else {
+            echo "Error: " . $audri_sql . "<br>" . $conn->error;
+        }
     } else {
-        echo "Error: " . $audri_sql . "<br>" . $conn->error;
+        echo "<script>alert('Stok hanya bisa ditambahkan, tidak bisa dikurangi!'); window.location='edit_barang.php?id=$audri_Id_produk';</script>";
     }
 }
 ?>

@@ -219,6 +219,7 @@ $audri_daftarBarang = isset($audri_cart) ? $audri_cart : [];
         <h2>Transaksi Berhasil</h2>
        
         <div class="info">
+        <p><strong>Nama Kasir:</strong><span><?= htmlspecialchars($audri_nama_user) ?></span></p>
             <p><strong>Nama Pelanggan:</strong><span><?= htmlspecialchars($audri_nama_pelanggan) ?></span></p>
             <p><strong>Tanggal Pembelian:</strong><span><?= $audri_tanggalPenjualan ?></span></p>
         </div>
