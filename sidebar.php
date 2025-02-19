@@ -63,11 +63,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 </a>
             </li>
             <li>
+            <?php if ($audri_role === 'Petugas'): ?>
                 <a href="cart.php" class="<?= ($current_page == 'cart.php') ? 'active' : '' ?>">
                     <span class="las la-receipt"></span>
                     <span>Transaksi</span>
                 </a>
             </li>
+            <?php endif; ?>
             <li>
                 <a href="laporan.php" class="<?= ($current_page == 'laporan.php') ? 'active' : '' ?>">
                     <span class="las la-clipboard-list"></span>
