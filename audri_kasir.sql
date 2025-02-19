@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 12 Feb 2025 pada 08.37
+-- Waktu pembuatan: 19 Feb 2025 pada 09.19
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -46,7 +46,11 @@ INSERT INTO `detail_penjualan` (`Id_detail`, `Id_penjualan`, `Id_produk`, `jumla
 (4, 2, '2', 2, 70000.00),
 (5, 2, '5', 2, 70000.00),
 (6, 3, '6', 1, 35000.00),
-(7, 4, '3', 3, 105000.00);
+(7, 4, '3', 3, 105000.00),
+(8, 5, '4', 3, 105000.00),
+(9, 5, '1', 1, 35000.00),
+(10, 6, '1', 3, 105000.00),
+(11, 6, '2', 1, 35000.00);
 
 -- --------------------------------------------------------
 
@@ -69,7 +73,9 @@ INSERT INTO `pelanggan` (`Id_pelanggan`, `nama_pelanggan`, `alamat`, `no_telepon
 (1, 'Audrina', 'Bandung', '085937640210'),
 (2, 'Tasya', 'Cimahi', '0892736452'),
 (3, 'Lenyta', 'Padalarang', '0897645312'),
-(4, 'Azahra', 'Cimahi Utara', '08372649813');
+(4, 'Azahra', 'Cimahi Utara', '08372649813'),
+(5, 'Lenyta', 'Cibabat', '0876936451'),
+(6, 'Lenyta', 'Cibabat', '087685432');
 
 -- --------------------------------------------------------
 
@@ -92,7 +98,9 @@ INSERT INTO `penjual` (`Id_penjualan`, `tanggal_penjualan`, `total_harga`, `Id_p
 (1, '2025-01-21', 105000.00, 1),
 (2, '2025-02-03', 140000.00, 2),
 (3, '2025-02-12', 35000.00, 3),
-(4, '2025-02-12', 105000.00, 4);
+(4, '2025-02-12', 105000.00, 4),
+(5, '2025-02-19', 140000.00, 5),
+(6, '2025-02-19', 140000.00, 6);
 
 -- --------------------------------------------------------
 
@@ -113,12 +121,12 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`Id_produk`, `nama_produk`, `harga`, `stok`, `foto_produk`) VALUES
-(1, 'Scarf Paris Lavender', 35000.00, 78, 'silver-lavender-coksu.JPG'),
-(2, 'Scarf Paris Rose Pink', 35000.00, 34, 'biscuit-rosepink.JPG'),
+(1, 'Scarf Paris Lavender', 35000.00, 74, 'silver-lavender-coksu.JPG'),
+(2, 'Scarf Paris Rose Pink', 35000.00, 33, 'biscuit-rosepink.JPG'),
 (3, 'Scarf Paris Silver', 35000.00, 82, 'silver-lavender-coksu.JPG'),
-(4, 'Scarf Paris Biscuit', 35000.00, 82, 'biscuit-rosepink.JPG'),
+(4, 'Scarf Paris Biscuit', 35000.00, 79, 'biscuit-rosepink.JPG'),
 (5, 'Scarf Paris Pistachio', 35000.00, 83, 'khaki-pistachio.JPG'),
-(6, 'Scarf Paris Coksu', 35000.00, 81, 'silver-lavender-coksu.JPG');
+(6, 'Scarf Paris Coksu', 35000.00, 82, 'silver-lavender-coksu.JPG');
 
 -- --------------------------------------------------------
 
@@ -217,25 +225,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `detail_penjualan`
 --
 ALTER TABLE `detail_penjualan`
-  MODIFY `Id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `Id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `Id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `penjual`
 --
 ALTER TABLE `penjual`
-  MODIFY `Id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `Id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `role`
@@ -247,7 +255,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `Id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
