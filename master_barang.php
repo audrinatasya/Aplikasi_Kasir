@@ -65,7 +65,7 @@ $audri_searchKeyword = $_GET['search'] ?? '';
         <div class="container">
             <div class="header-tools">
                 <form method="GET" action="master_barang.php" class="search-box">
-                    <input type="text" name="search" placeholder="Search produk..." class="search-input" value="<?php echo htmlspecialchars($audri_searchKeyword); ?>">
+                    <input type="text" name="search" placeholder="Search ..." class="search-input" value="<?php echo htmlspecialchars($audri_searchKeyword); ?>">
                     <button type="submit" class="search-btn"><i class="uil.search"></i> <img src="asset/search.svg" width="20px" height="20px"></button> 
                 </form>
 

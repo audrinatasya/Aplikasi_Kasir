@@ -27,6 +27,7 @@ function getRekap($audri_periode, $audri_tanggal = null, $audri_bulan = null, $a
         $audri_where .= " AND (pr.nama_produk LIKE '%$audri_searchKeyword%' OR p.Id_penjualan LIKE '%$audri_searchKeyword%' OR pl.nama_pelanggan LIKE '%$audri_searchKeyword%')";
     }
 
+    // Query untuk mengambil data penjualan
     $audri_query = "SELECT 
                 p.Id_penjualan, 
                 p.tanggal_penjualan, 
@@ -38,7 +39,7 @@ function getRekap($audri_periode, $audri_tanggal = null, $audri_bulan = null, $a
                 pl.nama_pelanggan
               FROM penjual p
               JOIN detail_penjualan dp ON p.Id_penjualan = dp.Id_penjualan
-              JOIN pelanggan pl ON dp.Id_penjualan = pl.Id_pelanggan
+              JOIN pelanggan pl ON p.Id_pelanggan = pl.Id_pelanggan
               JOIN produk pr ON dp.Id_produk = pr.Id_produk
               WHERE $audri_where
               ORDER BY p.tanggal_penjualan ASC, p.Id_penjualan ASC";
@@ -46,11 +47,9 @@ function getRekap($audri_periode, $audri_tanggal = null, $audri_bulan = null, $a
     $audri_result = mysqli_query($conn, $audri_query);
     $audri_data = mysqli_fetch_all($audri_result, MYSQLI_ASSOC);
 
+    // Query untuk menghitung total penjualan
     $audri_totalPenjualanQuery = "SELECT SUM(p.total_harga) AS total_penjualan
                             FROM penjual p
-                            JOIN detail_penjualan dp ON p.Id_penjualan = dp.Id_penjualan
-                            JOIN produk pr ON dp.Id_produk = pr.Id_produk
-                            JOIN pelanggan pl ON dp.Id_penjualan = pl.Id_pelanggan
                             WHERE $audri_where";
 
     $audri_totalPenjualanResult = mysqli_query($conn, $audri_totalPenjualanQuery);
@@ -58,7 +57,7 @@ function getRekap($audri_periode, $audri_tanggal = null, $audri_bulan = null, $a
     
     return [
         'data' => $audri_data,
-        'total_penjualan' =>$audri_totalPenjualanData['total_penjualan'] ?? 0 
+        'total_penjualan' => $audri_totalPenjualanData['total_penjualan'] ?? 0 
     ];
 }
 
@@ -73,6 +72,7 @@ if ($audri_periode == 'perbulan' && isset($_GET['bulan'])) {
 $audri_result = getRekap($audri_periode, $audri_tanggal, $audri_bulan, $audri_tahun, $audri_searchKeyword);
 $audri_rekapPenjualan = $audri_result['data'];
 $audri_totalPenjualan = $audri_result['total_penjualan'];
+
 ?>
 
 
