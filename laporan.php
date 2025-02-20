@@ -24,10 +24,10 @@ function getRekap($audri_periode, $audri_tanggal = null, $audri_bulan = null, $a
     }
 
     if (!empty($audri_searchKeyword)) {
-        $audri_where .= " AND (pr.nama_produk LIKE '%$audri_searchKeyword%' OR p.Id_penjualan LIKE '%$audri_searchKeyword%' OR pl.nama_pelanggan LIKE '%$audri_searchKeyword%')";
+        $audri_where .= " AND (pr.nama_produk LIKE '%$audri_searchKeyword%' OR p.Id_penjualan LIKE '%$audri_searchKeyword%')";
     }
 
-    // Query untuk mengambil data penjualan
+    // Query untuk mengambil data penjualan dengan LEFT JOIN
     $audri_query = "SELECT 
                 p.Id_penjualan, 
                 p.tanggal_penjualan, 
@@ -36,10 +36,10 @@ function getRekap($audri_periode, $audri_tanggal = null, $audri_bulan = null, $a
                 pr.harga, 
                 dp.subtotal, 
                 p.total_harga,
-                pl.nama_pelanggan
+                COALESCE(pl.nama_pelanggan, '') AS nama_pelanggan
               FROM penjual p
               JOIN detail_penjualan dp ON p.Id_penjualan = dp.Id_penjualan
-              JOIN pelanggan pl ON p.Id_pelanggan = pl.Id_pelanggan
+              LEFT JOIN pelanggan pl ON p.Id_pelanggan = pl.Id_pelanggan
               JOIN produk pr ON dp.Id_produk = pr.Id_produk
               WHERE $audri_where
               ORDER BY p.tanggal_penjualan ASC, p.Id_penjualan ASC";
@@ -204,7 +204,9 @@ $audri_totalPenjualan = $audri_result['total_penjualan'];
                         <tr>
                             <?php if ($audri_last_Id_penjualan !== $audri_data['Id_penjualan']): ?>
                                 <td rowspan="<?= $audri_rowspan_count[$audri_data['Id_penjualan']] ?>"><?= $audri_data['Id_penjualan'] ?></td>
-                                <td rowspan="<?= $audri_rowspan_count[$audri_data['Id_penjualan']] ?>"><?= $audri_data['nama_pelanggan'] ?></td>
+                                <td rowspan="<?= $audri_rowspan_count[$audri_data['Id_penjualan']] ?>">
+                                    <?= !empty($audri_data['nama_pelanggan']) ? htmlspecialchars($audri_data['nama_pelanggan']) : '-' ?>
+                                </td>
                                 <td rowspan="<?= $audri_rowspan_count[$audri_data['Id_penjualan']] ?>"><?= $audri_data['tanggal_penjualan'] ?></td>
                                 <td rowspan="<?= $audri_rowspan_count[$audri_data['Id_penjualan']] ?>">Rp. <?= number_format($audri_data['total_harga'], 0, ',', '.') ?></td>
                                 <?php $audri_last_Id_penjualan = $audri_data['Id_penjualan']; ?>

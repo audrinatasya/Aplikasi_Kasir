@@ -287,3 +287,125 @@ button:hover {
     background-color:rgb(197, 120, 197);
 }
 
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-weight: 400;
+    color: #555;
+}
+
+.radio-group .group-label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #e65c97;
+}
+
+.radio-group .radio-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.radio-group input[type="radio"] {
+    display: none;
+}
+
+.radio-group .radio-item label {
+    position: relative;
+    padding-left: 28px;
+    cursor: pointer;
+}
+
+.radio-group .radio-item label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #ff77c4;
+    background-color: white;
+    transition: 0.3s;
+}
+
+.radio-group .radio-item label:hover::before {
+    border-color: #ff4da7;
+}
+
+.radio-group input[type="radio"]:checked + label::before {
+    background: #ff77c4;
+    border: 4px solid white;
+    box-shadow: 0 0 0 2px #ff77c4;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute; 
+    background-color: #f9f9f9; 
+    min-width: 160px; 
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); 
+    z-index: 1; 
+    border-radius: 12px; 
+    border: 1px solid #f0d7e5;
+    margin-top: 5px; 
+}
+
+.dropdown-content div {
+    padding: 12px 16px; 
+    cursor: pointer; 
+    color: #555; 
+    transition: background-color 0.3s; 
+}
+
+.dropdown-content div:hover {
+    background-color: #f1f1f1; 
+}
+
+/* Style untuk container select-member */
+.select-member {
+    position: relative; /* Posisi relatif untuk container */
+    width: 100%; /* Lebar penuh */
+    margin-bottom: 20px; /* Jarak dari elemen bawah */
+}
+
+/* Style untuk input di dalam select-member */
+.select-member input {
+    width: 100%; /* Lebar penuh */
+    padding: 12px 35px 12px 12px; /* Padding untuk input */
+    font-size: 16px; /* Ukuran font */
+    border-radius: 12px; /* Sudut bulat */
+    border: 1px solid #f0d7e5; /* Border dengan warna soft pink */
+    background: #fef2f9; /* Warna latar belakang */
+    transition: border-color 0.3s; /* Transisi untuk border */
+    color: #555; /* Warna teks */
+    box-sizing: border-box; /* Pastikan padding tidak mempengaruhi lebar */
+}
+
+/* Style saat input di-focus */
+.select-member input:focus {
+    border-color: #ff77c4; /* Ubah warna border saat focus */
+    outline: none; /* Hilangkan outline default */
+}
+
+/* Style untuk label di dalam select-member */
+.select-member label {
+    font-weight: 700; /* Tebalkan font */
+    display: block; /* Buat label menjadi block */
+    margin-bottom: 6px; /* Jarak dari input */
+    color: #e65c97; /* Warna teks label */
+    margin-top: 16px; /* Jarak dari elemen atas */
+}
+
+/* Style untuk dropdown saat ditampilkan */
+.select-member .dropdown-content {
+    width: 100%; /* Lebar penuh */
+    max-height: 200px; /* Batasi tinggi dropdown */
+    overflow-y: auto; /* Tambahkan scroll jika konten terlalu panjang */
+    padding: 0; /* Hilangkan padding default */
+}
+

@@ -105,43 +105,41 @@ canvas {
         <div class="dashboard-stats">
             <?php
     
-                $queryTotalPenjualan = "SELECT SUM(total_harga) AS total_penjualan FROM penjual";
-                $resultTotalPenjualan = mysqli_query($conn, $queryTotalPenjualan);
-                $dataPenjualan = mysqli_fetch_assoc($resultTotalPenjualan);
-                $totalPenjualan = $dataPenjualan['total_penjualan'] ?? 0;
+                $audri_queryTotalPenjualan = "SELECT SUM(total_harga) AS total_penjualan FROM penjual";
+                $audri_resultTotalPenjualan = mysqli_query($conn, $audri_queryTotalPenjualan);
+                $audri_dataPenjualan = mysqli_fetch_assoc($audri_resultTotalPenjualan);
+                $audri_totalPenjualan = $audri_dataPenjualan['total_penjualan'] ?? 0;
 
-                $queryTotalBarang = "SELECT SUM(jumlah_produk) AS total_barang FROM detail_penjualan";
-                $resultTotalBarang = mysqli_query($conn, $queryTotalBarang);
-                $dataBarang = mysqli_fetch_assoc($resultTotalBarang);
-                $totalBarangTerjual = $dataBarang['total_barang'] ?? 0;
+                $audri_queryTotalBarang = "SELECT SUM(jumlah_produk) AS total_barang FROM detail_penjualan";
+                $audri_resultTotalbarang = mysqli_query($conn, $audri_queryTotalBarang);
+                $audri_dataBarang = mysqli_fetch_assoc($audri_resultTotalbarang);
+                $audri_totalBarangTerjual = $audri_dataBarang['total_barang'] ?? 0;
 
-                // Query untuk mendapatkan total penjualan per bulan
-                $queryPenjualanPerBulan = "SELECT DATE_FORMAT(tanggal_penjualan, '%Y-%m') AS bulan, 
+                $audri_queryPenjualanPerbulan = "SELECT DATE_FORMAT(tanggal_penjualan, '%Y-%m') AS bulan, 
                                                   SUM(total_harga) AS total 
                                            FROM penjual 
                                            GROUP BY bulan 
                                            ORDER BY bulan ASC";
-                $resultPenjualanPerBulan = mysqli_query($conn, $queryPenjualanPerBulan);
+                $audri_resultPenjualanPerbulan = mysqli_query($conn, $audri_queryPenjualanPerbulan);
                 
-                $bulanArray = [];
-                $totalArray = [];
-                while ($row = mysqli_fetch_assoc($resultPenjualanPerBulan)) {
-                    // Format bulan agar lebih mudah dibaca (contoh: "2024-01" jadi "Januari 2024")
-                    $bulanNama = date("F Y", strtotime($row['bulan'] . "-01"));
-                    $bulanArray[] = $bulanNama;
-                    $totalArray[] = $row['total'];
+                $audri_bulanArray = [];
+                $audri_totalArray = [];
+                while ($audri_row = mysqli_fetch_assoc($audri_resultPenjualanPerbulan)) {
+                    $audri_namaBulan = date("F Y", strtotime($audri_row['bulan'] . "-01"));
+                    $audri_bulanArray[] = $audri_namaBulan;
+                    $audri_totalArray[] = $audri_row['total'];
                 }
 
             ?>
 
             <div class="stat-box">
                 <h1>Total Penjualan</h1>
-                <p>Rp <?php echo number_format($totalPenjualan, 0, ',', '.'); ?></p>
+                <p>Rp <?php echo number_format($audri_totalPenjualan, 0, ',', '.'); ?></p>
             </div>
 
             <div class="stat-box">
                 <h1>Jumlah Barang Terjual</h1>
-                <p><?php echo number_format($totalBarangTerjual, 0, ',', '.'); ?> pcs</p>
+                <p><?php echo number_format($audri_totalBarangTerjual, 0, ',', '.'); ?> pcs</p>
             </div>
         </div>
 
@@ -163,16 +161,15 @@ canvas {
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     var ctx = document.getElementById('penjualanChart').getContext('2d');
     var penjualanChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: <?php echo json_encode($bulanArray); ?>,
+            labels: <?php echo json_encode($audri_bulanArray); ?>,
             datasets: [{
                 label: 'Total Penjualan (Rp)',
-                data: <?php echo json_encode($totalArray); ?>,
+                data: <?php echo json_encode($audri_totalArray); ?>,
                 backgroundColor: 'rgba(54, 162, 235, 0.6)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1

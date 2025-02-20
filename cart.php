@@ -8,7 +8,6 @@ session_regenerate_id(true);
 $audri_username = $_SESSION['username'];
 $audri_role = $_SESSION['role'];
 
-// Tangkap keyword pencarian jika ada
 $audri_searchKeyword = $_GET['search'] ?? '';
 
 ?>
@@ -63,10 +62,8 @@ $audri_searchKeyword = $_GET['search'] ?? '';
 </header>
 
 <?php
-// Query produk
 $audri_query = "SELECT Id_produk, nama_produk, harga, stok, foto_produk FROM produk";
 
-// Jika ada keyword search, tambahkan filter
 if (!empty($audri_searchKeyword)) {
     $audri_query .= " WHERE nama_produk LIKE '%$audri_searchKeyword%'";
 }
