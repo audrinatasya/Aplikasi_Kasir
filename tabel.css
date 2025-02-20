@@ -263,7 +263,6 @@ i.user.plus{
     }
 }
 
-
 @media print {
     body * {
         visibility: hidden;
@@ -286,6 +285,14 @@ i.user.plus{
         left: 0;
         width: 100%;
         text-align: center;
+    }
+
+    .toko-info {
+        margin-bottom: 20px;
+    }
+
+    .laporan-info {
+        margin-top: 20px;
     }
 
     .container, .print-area {

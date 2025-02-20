@@ -159,8 +159,8 @@ $audri_totalPenjualan = $audri_result['total_penjualan'];
             </div>
 
             <div class="print-section" style="text-align: center;">
-                <h2 class="judul-laporan">Laporan Penjualan</h2>
-                <h3>Bubble Scarf</h3>
+                <h2 class="judul-laporan">Bubble Scarf</h2>
+                <h3>Laporan Penjualan</h3>
                 <p>Periode Laporan: 
                     <?php
                     if ($audri_periode == 'perhari') {
@@ -173,6 +173,7 @@ $audri_totalPenjualan = $audri_result['total_penjualan'];
                     ?>
                 </p>
             </div>
+            
 
             <table class="table">
                 <thead>

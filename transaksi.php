@@ -234,7 +234,7 @@ $audri_daftarBarang = isset($audri_cart) ? $audri_cart : [];
                 <label>Nomor Telepon:</label>
                 <input type="text" id="nomor_telepon_member" disabled>
             </div>
-            <!-- Input hidden untuk menyimpan ID pelanggan -->
+       
             <input type="hidden" name="nama_pelanggan_member" id="nama_pelanggan_member">
         </div>
 
